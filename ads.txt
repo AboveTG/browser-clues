@@ -1,0 +1,89 @@
+# ==============================================================================
+
+# AUTHORIZED DIGITAL SELLERS (ads.txt) FILE
+
+# Place this file in the root directory of your domain: https://yourdomain.com/ads.txt
+
+# Format: <SSP/Exchange Domain>, <Publisher Account ID>, <Account Type>, <TAG Certificate ID (Optional)>
+
+# ==============================================================================
+
+
+
+# ------------------------------------------------------------------------------
+
+# 1. GOOGLE ADSENSE / GOOGLE AD MANAGER
+
+# Replace 'ca-pub-0000000000000000' with your actual 16-digit AdSense Publisher ID
+
+# ------------------------------------------------------------------------------
+
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+
+
+
+# ------------------------------------------------------------------------------
+
+# 2. EZOIC (If using Ezoic's publisher platform)
+
+# Replace '00000' with your assigned Ezoic Account ID
+
+# ------------------------------------------------------------------------------
+
+# ezoic.com, 00000, DIRECT
+
+
+
+# ------------------------------------------------------------------------------
+
+# 3. COMMON PROGRAMMATIC SSPs & EXCHANGES (HEADER BIDDING / PREBID)
+
+# Uncomment and replace placeholders when approved by specific SSP exchanges
+
+# ------------------------------------------------------------------------------
+
+# AppNexus / Xandr
+
+# appnexus.com, 0000, DIRECT, f5ab1c11731d5db1
+
+
+
+# Index Exchange
+
+# indexexchange.com, 000000, DIRECT, 50b1c356f2c5c854
+
+
+
+# Magnite (Rubicon Project)
+
+# rubiconproject.com, 00000, DIRECT, 0bfd66d529a09e5b
+
+
+
+# PubMatic
+
+# pubmatic.com, 000000, DIRECT, 5d30242b585c7d61
+
+
+
+# OpenX
+
+# openx.com, 000000000, DIRECT, 6a698e2e98614b9f
+
+
+
+# Criteo
+
+# criteo.com, 000000, DIRECT
+
+
+
+# ==============================================================================
+
+# Verification Note:
+
+# Ad exchanges update their crawlers every 24-48 hours. Ensure your site domain 
+
+# matches the domain verified inside your ad network publisher console.
+
+# ==============================================================================
