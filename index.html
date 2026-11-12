@@ -687,7 +687,7 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
                     <input type="text" id="letterName" value="Concerned Citizen" oninput="updateGeneratedLetter()" placeholder="Your Name" class="w-full bg-cardSurface border border-zinc-800 px-3 py-1.5 rounded text-white focus:border-amberWarning outline-none">
-                    <input type="text" id="letterLocation" value="Saint Paul, MN" oninput="updateGeneratedLetter()" placeholder="City, State" class="w-full bg-cardSurface border border-zinc-800 px-3 py-1.5 rounded text-white focus:border-amberWarning outline-none">
+                    <input type="text" id="letterLocation" value="" oninput="updateGeneratedLetter()" placeholder="City, State" class="w-full bg-cardSurface border border-zinc-800 px-3 py-1.5 rounded text-white focus:border-amberWarning outline-none">
                 </div>
 
                 <textarea id="letterPreviewText" readonly class="w-full h-32 bg-[#050507] border border-zinc-900 p-3 rounded text-xs font-mono text-zinc-300 leading-relaxed outline-none resize-none"></textarea>
@@ -1176,7 +1176,7 @@
 
         function updateGeneratedLetter() {
             const name = document.getElementById('letterName').value || 'Concerned Citizen';
-            const location = document.getElementById('letterLocation').value || 'Saint Paul, MN';
+            const location = document.getElementById('letterLocation').value || '[Your City, State]';
             const d1 = document.getElementById('demand01').checked;
             const d2 = document.getElementById('demand02').checked;
             const d3 = document.getElementById('demand03').checked;
