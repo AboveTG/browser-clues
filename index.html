@@ -32,7 +32,6 @@
         }
     </script>
     <style>
-        /* Forensic Dark Aesthetic & Scanline FX */
         body {
             background-color: #08080a;
             color: #f4f4f6;
@@ -57,19 +56,18 @@
         }
         @keyframes pulseGlowAmber {
             0%, 100% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.25); }
-            50% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.6); }
+            50% { box-shadow: 0 0 22px rgba(245, 158, 11, 0.55); }
         }
         .pulse-glow-amber {
             animation: pulseGlowAmber 2.5s infinite ease-in-out;
         }
         @keyframes pulseGlowCrimson {
             0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); }
-            50% { box-shadow: 0 0 28px rgba(239, 68, 68, 0.7); }
+            50% { box-shadow: 0 0 24px rgba(239, 68, 68, 0.65); }
         }
         .pulse-glow-crimson {
             animation: pulseGlowCrimson 2s infinite ease-in-out;
         }
-        /* Custom Scrollbars */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -93,7 +91,7 @@
     <!-- TOP NAVIGATION & AUDIT BAR -->
     <header class="sticky top-0 z-50 bg-[#08080a]/95 backdrop-blur-md border-b border-cardBorder">
         <!-- Trust State Banner -->
-        <div id="topTrustBanner" class="bg-amberWarning/10 border-b border-amberWarning/30 py-2 px-4 text-center transition-all duration-300">
+        <div id="topTrustBanner" class="bg-amberWarning/10 border-b border-amberWarning/30 py-1.5 px-4 text-center transition-all duration-300">
             <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono">
                 <div class="flex items-center gap-2">
                     <span id="trustStatusDot" class="h-2 w-2 rounded-full bg-emeraldSuccess animate-pulse"></span>
@@ -101,7 +99,7 @@
                         0 Outside Connections | 100% Local Scan | Zero Cookies | Zero Server Logging
                     </span>
                 </div>
-                <button onclick="toggleAuditDrawer()" class="px-3 py-1 bg-cardSurface hover:bg-zinc-800 border border-cardBorder rounded text-zinc-300 hover:text-white transition-all flex items-center gap-1.5 font-mono text-[11px] cursor-pointer">
+                <button type="button" onclick="toggleAuditDrawer()" class="px-2.5 py-1 bg-cardSurface hover:bg-zinc-800 border border-cardBorder rounded text-zinc-300 hover:text-white transition-all flex items-center gap-1.5 font-mono text-[11px] cursor-pointer">
                     <svg class="w-3.5 h-3.5 text-emeraldSuccess" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     <span id="connectionAuditCount">0 OUTSIDE CONNECTIONS</span>
                     <span class="text-zinc-500">[INSPECT AUDIT]</span>
@@ -110,1572 +108,668 @@
         </div>
 
         <!-- Connection & Storage Audit Drawer -->
-        <div id="auditDrawer" class="hidden bg-cardSurface border-b border-cardBorder p-4 transition-all">
-            <div class="max-w-7xl mx-auto space-y-3">
-                <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
-                    <h4 class="font-mono text-sm font-bold text-emeraldSuccess flex items-center gap-2">
+        <div id="auditDrawer" class="hidden bg-cardSurface border-b border-cardBorder p-3.5 transition-all">
+            <div class="max-w-7xl mx-auto space-y-2.5">
+                <div class="flex items-center justify-between border-b border-zinc-800 pb-1.5">
+                    <h4 class="font-mono text-xs font-bold text-emeraldSuccess flex items-center gap-2">
                         <span>[REAL-TIME NETWORK & STORAGE AUDIT]</span>
                     </h4>
-                    <span class="text-xs text-zinc-400 font-mono">Client-side Sandbox Verification</span>
+                    <span class="text-[11px] text-zinc-400 font-mono">Client-side Sandbox Verification</span>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 font-mono text-xs">
-                    <div class="p-2.5 bg-darkBg border border-cardBorder rounded">
-                        <div class="text-zinc-500">Resource Requests</div>
-                        <div id="auditPings" class="text-lg font-bold text-emeraldSuccess mt-0.5">0</div>
-                        <div class="text-[10px] text-zinc-600">performance.getEntries()</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 font-mono text-xs">
+                    <div class="p-2 bg-darkBg border border-cardBorder rounded">
+                        <div class="text-zinc-500 text-[11px]">Resource Requests</div>
+                        <div id="auditPings" class="text-base font-bold text-emeraldSuccess">0</div>
                     </div>
-                    <div class="p-2.5 bg-darkBg border border-cardBorder rounded">
-                        <div class="text-zinc-500">Cookies Stored</div>
-                        <div id="auditCookies" class="text-lg font-bold text-emeraldSuccess mt-0.5">0</div>
-                        <div class="text-[10px] text-zinc-600">document.cookie</div>
+                    <div class="p-2 bg-darkBg border border-cardBorder rounded">
+                        <div class="text-zinc-500 text-[11px]">Cookies Stored</div>
+                        <div id="auditCookies" class="text-base font-bold text-emeraldSuccess">0</div>
                     </div>
-                    <div class="p-2.5 bg-darkBg border border-cardBorder rounded">
-                        <div class="text-zinc-500">LocalStorage Keys</div>
-                        <div id="auditLocal" class="text-lg font-bold text-emeraldSuccess mt-0.5">0</div>
-                        <div class="text-[10px] text-zinc-600">window.localStorage</div>
+                    <div class="p-2 bg-darkBg border border-cardBorder rounded">
+                        <div class="text-zinc-500 text-[11px]">LocalStorage Keys</div>
+                        <div id="auditLocal" class="text-base font-bold text-emeraldSuccess">0</div>
                     </div>
-                    <div class="p-2.5 bg-darkBg border border-cardBorder rounded">
-                        <div class="text-zinc-500">Session Keys</div>
-                        <div id="auditSession" class="text-lg font-bold text-emeraldSuccess mt-0.5">0</div>
-                        <div class="text-[10px] text-zinc-600">window.sessionStorage</div>
+                    <div class="p-2 bg-darkBg border border-cardBorder rounded">
+                        <div class="text-zinc-500 text-[11px]">Session Keys</div>
+                        <div id="auditSession" class="text-base font-bold text-emeraldSuccess">0</div>
                     </div>
                 </div>
-                <p class="text-[11px] text-zinc-400 font-mono">
-                    ✓ Zero outbound network calls made by diagnostic modules. Pure client-side local execution.
-                </p>
             </div>
         </div>
 
-        <!-- Main Header Branding -->
-        <div class="max-w-7xl mx-auto px-4 py-5 space-y-2">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- Compact Header Branding -->
+        <div class="max-w-7xl mx-auto px-4 py-3.5">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
                 <div>
-                    <div class="flex items-center gap-2 text-xs font-mono text-amberWarning mb-1">
+                    <div class="flex items-center gap-2 text-[11px] font-mono text-amberWarning mb-0.5">
                         <span class="px-1.5 py-0.5 bg-amberWarning/10 border border-amberWarning/30 rounded font-bold">PUBLIC FORENSIC EXHIBIT</span>
                         <span>// ZERO-DOLLAR TRANSPARENCY</span>
                     </div>
-                    <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white font-mono uppercase">
+                    <h1 class="text-xl md:text-2xl font-extrabold tracking-tight text-white font-mono uppercase">
                         WHAT YOUR BROWSER SAYS ABOUT YOU
                     </h1>
                 </div>
+                <p class="text-xs md:text-sm text-zinc-300 font-sans max-w-xl leading-snug">
+                    Your browser reveals silent clues about your daily life in 0.2 seconds—and ad companies use them to price and profile you without asking.
+                </p>
             </div>
-            <p class="text-sm md:text-base text-zinc-300 font-sans max-w-4xl leading-relaxed">
-                Your browser reveals silent clues about your daily life in less than a second—and data companies use them to build hidden profiles without asking. See what your device gives away right now.
-            </p>
-            <!-- Toast Notifications Container -->
             <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 py-6 space-y-8 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-4 py-5 space-y-6 flex-grow w-full">
 
         <!-- THREE-TAB NAVIGATION MODE SWITCHER -->
-        <section class="space-y-6">
-            <!-- Navigation Tab Bar -->
+        <section class="space-y-5">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-2 bg-cardSurface p-1.5 rounded-lg border border-cardBorder font-mono text-xs">
-                <button id="navTab01" onclick="switchMainTab('tab01')" class="py-3 px-4 rounded text-center font-bold transition-all bg-amberWarning text-black shadow cursor-pointer">
+                <button type="button" id="navTab01" onclick="switchMainTab('tab01')" class="py-2.5 px-4 rounded text-center font-bold transition-all bg-amberWarning text-black shadow cursor-pointer">
                     01 // WHAT YOUR BROWSER SAYS
                 </button>
-                <button id="navTab02" onclick="switchMainTab('tab02')" class="py-3 px-4 rounded text-center font-bold transition-all text-zinc-400 hover:text-white hover:bg-zinc-800 cursor-pointer">
+                <button type="button" id="navTab02" onclick="switchMainTab('tab02')" class="py-2.5 px-4 rounded text-center font-bold transition-all text-zinc-400 hover:text-white hover:bg-zinc-800 cursor-pointer">
                     02 // FLIP THE SCRIPT (WHO IS WATCHING)
                 </button>
-                <button id="navTab03" onclick="switchMainTab('tab03')" class="py-3 px-4 rounded text-center font-bold transition-all text-zinc-400 hover:text-white hover:bg-zinc-800 cursor-pointer">
+                <button type="button" id="navTab03" onclick="switchMainTab('tab03')" class="py-2.5 px-4 rounded text-center font-bold transition-all text-zinc-400 hover:text-white hover:bg-zinc-800 cursor-pointer">
                     03 // .GOV & .US PROOF ROOM
                 </button>
             </div>
 
             <!-- TAB 01 CONTENT: WHAT YOUR BROWSER SAYS -->
-            <div id="contentTab01" class="space-y-8">
+            <div id="contentTab01" class="space-y-6">
 
-                <!-- 3-SECOND HEADLINE SUMMARY BOX -->
-                <div class="zine-card zine-card-amber bg-amberWarning/10 p-5 rounded-lg border-l-4 border-l-amberWarning space-y-2">
-                    <div class="flex items-center gap-2 text-amberWarning font-mono font-extrabold text-sm uppercase">
-                        <span class="animate-pulse">⚡</span>
-                        <span>IN 0.2 SECONDS: YOUR DEVICE SIGNATURE IS OUT</span>
+                <!-- COMPACT 0.2-SECOND SUMMARY BANNER -->
+                <div class="zine-card zine-card-amber bg-amberWarning/10 px-4 py-3 rounded-lg border-l-4 border-l-amberWarning flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="text-xs text-zinc-200 font-sans leading-relaxed">
+                        <span class="text-amberWarning font-mono font-extrabold uppercase mr-1.5">⚡ IN 0.2 SECONDS:</span>
+                        Your browser revealed your screen size, graphics chip, time zone, CPU speed, and privacy settings—without asking permission.
                     </div>
-                    <p class="text-xs md:text-sm text-zinc-200 font-sans leading-relaxed">
-                        Your browser just revealed your screen dimensions, graphics chip signature, timezone, CPU memory, and power state—without asking for permission. Scroll down to inspect your 6 live clues and test how ad brokers bid on your attention.
-                    </p>
                 </div>
 
-                <!-- 6 DIAGNOSTIC CLUE CARDS -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Clue 1: Screen & Pixel Density -->
-                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
-                        <div class="flex justify-between items-center text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+                <!-- 6 COMPACT DIAGNOSTIC CLUE CARDS -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                    <!-- Clue 1 -->
+                    <div class="zine-card bg-cardSurface p-3.5 rounded-lg space-y-1.5">
+                        <div class="flex justify-between items-center text-[11px] font-mono text-zinc-400 border-b border-zinc-800 pb-1.5">
                             <span>CLUE 01</span>
                             <span class="text-amberWarning font-bold">SCREEN & RESOLUTION</span>
                         </div>
-                        <div id="checkScreenVal" class="font-mono text-base font-bold text-white">Detecting...</div>
-                        <p class="text-xs text-zinc-400">
-                            Viewport metrics, pixel density ratio, and color depth create an instant hardware footprint.
+                        <div id="checkScreenVal" class="font-mono text-sm font-bold text-white">Detecting...</div>
+                        <p class="text-xs text-zinc-400 leading-snug">
+                            Screen size and sharpness create an instant hardware footprint.
                         </p>
                     </div>
 
-                    <!-- Clue 2: GPU Graphics Fingerprint -->
-                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
-                        <div class="flex justify-between items-center text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+                    <!-- Clue 2 -->
+                    <div class="zine-card bg-cardSurface p-3.5 rounded-lg space-y-1.5">
+                        <div class="flex justify-between items-center text-[11px] font-mono text-zinc-400 border-b border-zinc-800 pb-1.5">
                             <span>CLUE 02</span>
                             <span class="text-amberWarning font-bold">GRAPHICS CHIP (GPU)</span>
                         </div>
                         <div id="checkGpuVal" class="font-mono text-xs font-bold text-emeraldSuccess truncate">Detecting...</div>
-                        <p class="text-xs text-zinc-400">
-                            WebGL canvas graphics card renderer string uniquely identifies your device hardware tier.
+                        <p class="text-xs text-zinc-400 leading-snug">
+                            Graphics card signature reveals your exact phone or computer tier.
                         </p>
                     </div>
 
-                    <!-- Clue 3: Timezone & Region -->
-                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
-                        <div class="flex justify-between items-center text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+                    <!-- Clue 3 -->
+                    <div class="zine-card bg-cardSurface p-3.5 rounded-lg space-y-1.5">
+                        <div class="flex justify-between items-center text-[11px] font-mono text-zinc-400 border-b border-zinc-800 pb-1.5">
                             <span>CLUE 03</span>
                             <span class="text-amberWarning font-bold">TIMEZONE & REGION</span>
                         </div>
-                        <div id="checkTimeval" class="font-mono text-base font-bold text-white">Detecting...</div>
-                        <p class="text-xs text-zinc-400">
-                            Pins down your real-world geographic region and active daily schedule without asking for GPS.
+                        <div id="checkTimeval" class="font-mono text-sm font-bold text-white">Detecting...</div>
+                        <p class="text-xs text-zinc-400 leading-snug">
+                            Pins down your general region and daily schedule without asking GPS.
                         </p>
                     </div>
 
-                    <!-- Clue 4: Battery & Power State -->
-                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
-                        <div class="flex justify-between items-center text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+                    <!-- Clue 4 -->
+                    <div class="zine-card bg-cardSurface p-3.5 rounded-lg space-y-1.5">
+                        <div class="flex justify-between items-center text-[11px] font-mono text-zinc-400 border-b border-zinc-800 pb-1.5">
                             <span>CLUE 04</span>
                             <span class="text-amberWarning font-bold">BATTERY & POWER STATE</span>
                         </div>
-                        <div id="checkBatteryVal" class="font-mono text-base font-bold text-white">Detecting...</div>
-                        <p class="text-xs text-zinc-400">
-                            Battery API metrics can be cross-referenced across ad pings to link browser sessions.
+                        <div id="checkBatteryVal" class="font-mono text-sm font-bold text-white">Detecting...</div>
+                        <p class="text-xs text-zinc-400 leading-snug">
+                            Battery level can be matched across ad pings to link your sessions.
                         </p>
                     </div>
 
-                    <!-- Clue 5: CPU Cores & System RAM -->
-                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
-                        <div class="flex justify-between items-center text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+                    <!-- Clue 5 -->
+                    <div class="zine-card bg-cardSurface p-3.5 rounded-lg space-y-1.5">
+                        <div class="flex justify-between items-center text-[11px] font-mono text-zinc-400 border-b border-zinc-800 pb-1.5">
                             <span>CLUE 05</span>
                             <span class="text-amberWarning font-bold">HARDWARE CORES & RAM</span>
                         </div>
-                        <div id="checkCpuVal" class="font-mono text-base font-bold text-white">Detecting...</div>
-                        <p class="text-xs text-zinc-400">
-                            Exposes your processing power tier (budget phone vs. workstation) to calculate CPM valuations.
+                        <div id="checkCpuVal" class="font-mono text-sm font-bold text-white">Detecting...</div>
+                        <p class="text-xs text-zinc-400 leading-snug">
+                            Exposes processor power to estimate what kind of device you own.
                         </p>
                     </div>
 
-                    <!-- Clue 6: Privacy Signals (GPC & DNT) -->
-                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
-                        <div class="flex justify-between items-center text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+                    <!-- Clue 6 -->
+                    <div class="zine-card bg-cardSurface p-3.5 rounded-lg space-y-1.5">
+                        <div class="flex justify-between items-center text-[11px] font-mono text-zinc-400 border-b border-zinc-800 pb-1.5">
                             <span>CLUE 06</span>
                             <span class="text-amberWarning font-bold">PRIVACY SIGNAL (GPC/DNT)</span>
                         </div>
-                        <div id="checkDntVal" class="font-mono text-base font-bold text-white">Detecting...</div>
-                        <p class="text-xs text-zinc-400">
-                            Shows whether your browser signals (Do Not Track / Global Privacy Control) are respected or ignored.
+                        <div id="checkDntVal" class="font-mono text-sm font-bold text-white">Detecting...</div>
+                        <p class="text-xs text-zinc-400 leading-snug">
+                            Shows whether your browser asks ad networks not to track you.
                         </p>
                     </div>
                 </div>
 
-                <!-- IDENTITY BRIDGE CALLOUT -->
-                <div class="zine-card zine-card-crimson bg-cardSurface p-6 rounded-lg space-y-4">
-                    <div class="flex items-center gap-2 border-b border-zinc-800 pb-3">
-                        <span class="px-2 py-0.5 bg-crimsonAccent text-white font-mono font-bold text-xs rounded">EXPOSURE ARCHITECTURE</span>
-                        <h3 class="font-mono font-bold text-white text-base">HOW PHONE CLUES CONNECT TO YOUR REAL NAME</h3>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-sans text-xs text-zinc-300">
-                        <div class="p-3.5 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <span class="font-mono text-amberWarning font-bold block">01 // THE MAID & COOKIE SYNC</span>
-                            <p>Ad networks link your Mobile Advertising ID (MAID) to browser cookies using third-party tracker pings across apps and websites.</p>
-                        </div>
-                        <div class="p-3.5 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <span class="font-mono text-amberWarning font-bold block">02 // IP & WI-FI BSSID MAPPING</span>
-                            <p>Your home IP address and nearby Wi-Fi network IDs (BSSIDs) bridge anonymous browser sessions to household physical addresses.</p>
-                        </div>
-                        <div class="p-3.5 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <span class="font-mono text-amberWarning font-bold block">03 // MASTER MATCH GRAPHS</span>
-                            <p>Data brokers ingest these hashes into master identity graphs, matching browser telemetry directly to voter files, credit histories, and full names.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- REAL-TIME BIDDING AUCTION DECK & UNIFIED OPT-IN TOGGLE -->
-                <section class="zine-card zine-card-amber bg-cardSurface rounded-lg p-6 space-y-6">
+                <!-- UNIFIED LIVE AD AUCTION & PRIVACY SIMULATOR -->
+                <section class="zine-card zine-card-amber bg-cardSurface rounded-lg p-5 space-y-5">
+                    <!-- Top Header & OPT-IN Toggle -->
                     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <span class="px-2 py-0.5 bg-amberWarning text-black font-mono font-extrabold text-xs rounded">
-                                    INTERACTIVE AUCTION DECK
+                                <span class="px-2 py-0.5 bg-amberWarning text-black font-mono font-extrabold text-[11px] rounded">
+                                    LIVE AD AUCTION
                                 </span>
-                                <span class="text-xs font-mono text-zinc-400">SPLIT-SECOND AD BIDDING DECODER</span>
+                                <span class="text-xs font-mono text-zinc-400">FASTER THAN A HUMAN BLINK (180ms)</span>
                             </div>
-                            <h2 class="text-xl font-bold font-mono text-white">THE 238ms REAL-TIME AD AUCTION</h2>
+                            <h2 class="text-lg md:text-xl font-bold font-mono text-white">WHAT YOUR ATTENTION COSTS RIGHT NOW</h2>
+                            <p class="text-xs text-zinc-400 mt-0.5">
+                                Every time you load a page, ad companies hold a split-second auction to show you an ad.
+                            </p>
                         </div>
 
-                        <!-- Unified Single Opt-In Switch Button -->
+                        <!-- Unified Opt-In Switch Button -->
                         <div class="flex flex-col items-start lg:items-end space-y-1 font-mono">
-                            <button id="btnAuctionToggle" onclick="toggleAuctionMode()" class="relative px-5 py-3 rounded-lg font-bold border transition-all duration-300 flex items-center gap-3 shadow-lg bg-amberWarning/15 text-amberWarning border-amberWarning pulse-glow-amber cursor-pointer hover:bg-amberWarning/25">
+                            <button type="button" id="btnAuctionToggle" onclick="toggleAuctionMode()" class="px-4 py-2.5 rounded-lg font-bold border transition-all duration-300 flex items-center gap-2.5 shadow-lg bg-amberWarning/15 text-amberWarning border-amberWarning pulse-glow-amber cursor-pointer hover:bg-amberWarning/25">
                                 <span id="toggleStatusDot" class="h-2.5 w-2.5 rounded-full bg-amberWarning animate-ping"></span>
                                 <div class="flex flex-col text-left">
                                     <span id="toggleMainLabel" class="text-xs uppercase tracking-wide font-extrabold text-amberWarning">[ OPT-IN: SEE YOUR REAL-TIME BIDS — FREE FOR YOU // PAID BY THEM ]</span>
                                     <span id="toggleSubLabel" class="text-[10px] text-zinc-300 font-normal">Click to toggle live RTB buyer pings (Default: 100% Local Mode)</span>
                                 </div>
                             </button>
-                            <span class="text-[10px] text-zinc-400 italic">
-                                Clicking this does not cost you a dime, but it charges the ad buyer fractions of a cent to show you their auction code.
-                            </span>
+                            <div id="payoutTickerRow" class="hidden text-[11px] text-crimsonAccent font-bold">
+                                ESTIMATED VIEW PAYOUT: <span id="livePayoutTicker" class="text-white">$0.0024</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Auction Control Dashboard -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Auction Stats Card -->
-                        <div class="bg-darkBg p-5 rounded-lg border border-zinc-800 space-y-4 flex flex-col justify-between">
+                    <!-- Hero Price Summary + Test Privacy Mode Switch -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center bg-darkBg border border-zinc-800 rounded-lg p-4">
+                        <!-- Winning Price Display (Left 7 Cols) -->
+                        <div class="lg:col-span-7 flex flex-col sm:flex-row sm:items-center gap-4">
                             <div>
-                                <div class="flex justify-between items-center text-xs font-mono text-zinc-400 mb-2">
-                                    <span>AUCTION SPEED</span>
-                                    <span class="text-amberWarning font-bold">238 MILLISECONDS</span>
+                                <div class="text-[11px] font-mono uppercase tracking-wider text-zinc-400" id="heroAuctionStatus">
+                                    Winning Bid (Your Current Device)
                                 </div>
-                                <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden mb-4">
-                                    <div id="auctionProgressBar" class="bg-amberWarning h-full w-0 transition-all duration-300"></div>
+                                <div class="flex items-baseline gap-2.5 mt-0.5">
+                                    <span id="winningPriceHero" class="text-3xl md:text-4xl font-extrabold font-mono text-amberWarning">$0.00</span>
+                                    <span class="text-xs font-mono text-zinc-400">per 1,000 views</span>
                                 </div>
-
-                                <div class="space-y-3 font-mono text-xs">
-                                    <div class="flex justify-between py-1.5 border-b border-zinc-800/80">
-                                        <span class="text-zinc-400">Targeting CPM Valuation:</span>
-                                        <span id="auctionCPM" class="font-bold text-white">$2.40 / CPM ($0.0024/view)</span>
-                                    </div>
-                                    <div class="flex justify-between py-1.5 border-b border-zinc-800/80">
-                                        <span class="text-zinc-400">Participating Ad Buyers:</span>
-                                        <span id="auctionBuyers" class="font-bold text-amberWarning">14 Automated Buyers</span>
-                                    </div>
-                                    <div class="flex justify-between py-1.5 border-b border-zinc-800/80">
-                                        <span class="text-zinc-400">Auction Engine Mode:</span>
-                                        <span id="auctionModeLabel" class="font-bold text-emeraldSuccess">LOCAL SIMULATION</span>
-                                    </div>
-                                    <div id="payoutTickerRow" class="hidden flex justify-between py-1.5 border-b border-zinc-800/80 bg-crimsonAccent/10 px-2 rounded">
-                                        <span class="text-crimsonAccent font-bold">ESTIMATED VIEW PAYOUT:</span>
-                                        <span id="livePayoutTicker" class="font-bold text-white font-mono">$0.0024</span>
-                                    </div>
-                                </div>
+                                <p id="heroSubtext" class="text-xs text-zinc-400 mt-1">
+                                    Calculating price from your device clues...
+                                </p>
+                                <div id="privacyDropBadge" class="mt-1.5"></div>
                             </div>
-
-                            <button onclick="runAuctionSim()" class="w-full py-3 bg-amberWarning hover:bg-amber-400 text-black font-mono font-bold text-xs uppercase rounded transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span>REPLAY 238ms RTB AD AUCTION</span>
-                            </button>
                         </div>
 
-                        <!-- Live Stream Bid Console + Locked Overlay -->
-                        <div class="lg:col-span-2 bg-darkBg p-5 rounded-lg border border-zinc-800 relative flex flex-col justify-between overflow-hidden">
-                            <!-- Locked Overlay (When in Local Mode) -->
-                            <div id="lockedBidderOverlay" class="absolute inset-0 bg-darkBg/90 backdrop-blur-md z-10 flex flex-col items-center justify-center p-6 text-center space-y-3 transition-all duration-300">
-                                <span class="px-3 py-1 bg-amberWarning/20 border border-amberWarning text-amberWarning font-mono font-bold text-xs rounded">
-                                    [ BIDDER REVEAL LOCKED ]
-                                </span>
-                                <h4 class="font-mono text-base font-bold text-white uppercase">
-                                    CLICK ABOVE TO FORCE LIVE AD AUCTION
-                                </h4>
-                                <p class="text-xs text-zinc-400 max-w-md font-sans">
-                                    Currently running in 100% private local simulation mode. Opt in above to unlock live ad buyer bid logs, real network pings, and fractional cent payouts funded by advertisers.
-                                </p>
-                                <button onclick="toggleAuctionMode()" class="px-4 py-2 bg-amberWarning text-black font-mono font-bold text-xs uppercase rounded shadow hover:bg-amber-400 transition-all cursor-pointer">
-                                    UNLOCK LIVE BIDDERS
+                        <!-- Interactive Privacy Hardening Control (Right 5 Cols) -->
+                        <div class="lg:col-span-5 bg-cardSurface border border-zinc-800 rounded-lg p-3.5 flex items-center justify-between gap-3">
+                            <div>
+                                <div class="text-xs font-bold text-white">Test Privacy Mode (Hide Clues)</div>
+                                <div class="text-[11px] text-zinc-400 leading-snug mt-0.5">
+                                    Flip on to watch your ad price tag drop when tracking clues are hidden.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5 shrink-0">
+                                <label class="relative inline-flex items-center cursor-pointer" title="Toggle Privacy Mode">
+                                    <input type="checkbox" id="privacyHardeningToggle" onchange="runAuctionSim()" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emeraldSuccess"></div>
+                                </label>
+                                <button type="button" onclick="runAuctionSim()" class="px-2.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-mono text-[11px] font-bold rounded border border-zinc-700 cursor-pointer">
+                                    REPLAY
                                 </button>
                             </div>
+                        </div>
+                    </div>
 
-                            <div>
-                                <div class="flex justify-between items-center mb-3">
-                                    <span class="font-mono text-xs font-bold text-white uppercase flex items-center gap-2">
-                                        <span class="h-2 w-2 rounded-full bg-amberWarning animate-ping"></span>
-                                        LIVE BIDSTREAM DECODER LOG
-                                    </span>
-                                    <span class="text-[10px] font-mono text-zinc-500">FORMAT: OPENRTB v2.6 BROADCAST</span>
-                                </div>
-                                <div id="bidstreamLog" class="bg-[#050507] p-3 rounded border border-zinc-900 font-mono text-xs space-y-1.5 h-48 overflow-y-auto text-zinc-300">
-                                    <!-- Populated dynamically via JS -->
-                                </div>
+                    <!-- Side-by-Side 2-Column Grid: Competing Buyers (Left) & Device Price Receipt (Right) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <!-- Left Column: Competing Ad Companies -->
+                        <div class="bg-darkBg border border-zinc-800 rounded-lg p-4 space-y-3">
+                            <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+                                <h3 class="font-mono text-xs font-bold text-white uppercase">Ad Companies Competing for Your Screen</h3>
+                                <span id="auctionClockBadge" class="text-[11px] font-mono text-amberWarning">Clock: 0 ms</span>
                             </div>
+                            <div id="bidderListContainer" class="space-y-2">
+                                <!-- Populated via JS -->
+                            </div>
+                        </div>
 
-                            <div class="mt-4 pt-3 border-t border-zinc-800 flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                                <span>Winning Buyer: <strong id="winningBidder" class="text-white">IndexExchange</strong></span>
-                                <span>Winning Cleared CPM: <strong id="winningPrice" class="text-emeraldSuccess">$4.82 CPM</strong></span>
+                        <!-- Right Column: Plain-English Device Receipt -->
+                        <div class="bg-darkBg border border-zinc-800 rounded-lg p-4 space-y-3">
+                            <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+                                <h3 class="font-mono text-xs font-bold text-white uppercase">Why You Cost This Much (Your Receipt)</h3>
+                                <span class="text-[11px] font-mono text-zinc-400">PLAIN-ENGLISH BREAKDOWN</span>
+                            </div>
+                            <div id="receiptLedgerContainer" class="space-y-2">
+                                <!-- Populated via JS -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- OpenRTB 2.6 JSON Packet Inspector with Dual-View Toggle -->
-                    <div class="bg-darkBg rounded-lg border border-zinc-800 p-4 space-y-4">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-zinc-800 pb-3">
+                    <!-- Compact OpenRTB 2.6 Code / Plain English Decoder -->
+                    <div class="bg-darkBg rounded-lg border border-zinc-800 p-3.5 space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
                             <div class="flex items-center gap-2">
-                                <button id="btnViewRawJson" onclick="setJsonViewMode('raw')" class="px-3 py-1.5 bg-amberWarning text-black font-mono text-xs rounded font-bold transition-all cursor-pointer">
+                                <button type="button" id="btnViewRawJson" onclick="setJsonViewMode('raw')" class="px-2.5 py-1 bg-amberWarning text-black font-mono text-[11px] rounded font-bold transition-all cursor-pointer">
                                     [ RAW OPENRTB 2.6 CODE ]
                                 </button>
-                                <button id="btnViewDecoder" onclick="setJsonViewMode('decoder')" class="px-3 py-1.5 bg-zinc-800 text-zinc-400 hover:text-white font-mono text-xs rounded font-bold transition-all cursor-pointer">
+                                <button type="button" id="btnViewDecoder" onclick="setJsonViewMode('decoder')" class="px-2.5 py-1 bg-zinc-800 text-zinc-400 hover:text-white font-mono text-[11px] rounded font-bold transition-all cursor-pointer">
                                     [ PLAIN ENGLISH DECODER ]
                                 </button>
                             </div>
-                            <button onclick="copyOpenRTBJson()" class="px-3 py-1.5 bg-cardSurface hover:bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-mono rounded transition-all flex items-center gap-1.5 cursor-pointer">
-<!-- =========================================================
-     BROWSER CLUES: LIVE AD AUCTION & PRIVACY SIMULATOR
-     ========================================================= -->
-<style>
-  .bc-auction-wrapper {
-    max-width: 820px;
-    margin: 48px auto;
-    padding: 0 24px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: #f1f5f9;
-    line-height: 1.65;
-  }
+                            <button type="button" onclick="copyOpenRTBJson()" class="px-2.5 py-1 bg-cardSurface hover:bg-zinc-800 border border-zinc-700 text-zinc-200 text-[11px] font-mono rounded transition-all flex items-center gap-1.5 cursor-pointer">
+                                <span>COPY OPENRTB JSON</span>
+                            </button>
+                        </div>
+
+                        <div id="jsonRawView" class="block">
+                            <pre id="jsonInspectorDisplay" class="bg-[#050507] p-3 rounded text-[11px] font-mono text-amberWarning/90 overflow-x-auto max-h-40 border border-zinc-900 leading-relaxed"></pre>
+                        </div>
+
+                        <div id="jsonDecoderView" class="hidden overflow-x-auto">
+                            <table class="w-full text-left font-mono text-xs border-collapse">
+                                <thead>
+                                    <tr class="border-b border-zinc-800 text-zinc-400 bg-cardSurface">
+                                        <th class="p-2">OpenRTB Field</th>
+                                        <th class="p-2">Your Browser Value</th>
+                                        <th class="p-2">What This Tells Ad Buyers</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-zinc-800/60 text-zinc-300">
+                                    <tr>
+                                        <td class="p-2 text-amberWarning font-bold">device.w & h</td>
+                                        <td id="decScreenVal" class="p-2 text-white">Detecting...</td>
+                                        <td class="p-2 text-zinc-400 font-sans">Matches phone vs. laptop ad sizes.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 text-amberWarning font-bold">device.ext.gpu</td>
+                                        <td id="decGpuVal" class="p-2 text-emeraldSuccess truncate max-w-xs">Detecting...</td>
+                                        <td class="p-2 text-zinc-400 font-sans">Identifies your graphics chip tier.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 text-amberWarning font-bold">device.geo.tz</td>
+                                        <td id="decTzVal" class="p-2 text-white">Detecting...</td>
+                                        <td class="p-2 text-zinc-400 font-sans">Pins down your time zone without GPS.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 text-amberWarning font-bold">user.ext.gpc</td>
+                                        <td id="decDntVal" class="p-2 text-white">Detecting...</td>
+                                        <td class="p-2 text-zinc-400 font-sans">Shows if your browser blocks tracking.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- COMPACT IDENTITY BRIDGE CALLOUT -->
+                <div class="zine-card zine-card-crimson bg-cardSurface p-4 rounded-lg space-y-3">
+                    <div class="flex items-center gap-2 border-b border-zinc-800 pb-2">
+                        <span class="px-2 py-0.5 bg-crimsonAccent text-white font-mono font-bold text-[11px] rounded">HOW IT CONNECTS</span>
+                        <h3 class="font-mono font-bold text-white text-sm">HOW ANONYMOUS CLUES LINK TO YOUR REAL NAME</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 font-sans text-xs text-zinc-300">
+                        <div class="p-3 bg-darkBg border border-zinc-800 rounded space-y-1">
+                            <span class="font-mono text-amberWarning font-bold block">01 // PHONE AD ID SYNC</span>
+                            <p class="leading-snug">Ad networks link your phone's advertising ID to browser cookies across apps and websites.</p>
+                        </div>
+                        <div class="p-3 bg-darkBg border border-zinc-800 rounded space-y-1">
+                            <span class="font-mono text-amberWarning font-bold block">02 // HOME IP & WI-FI</span>
+                            <p class="leading-snug">Your home internet address bridges anonymous browser visits to a physical household address.</p>
+                        </div>
+                        <div class="p-3 bg-darkBg border border-zinc-800 rounded space-y-1">
+                            <span class="font-mono text-amberWarning font-bold block">03 // DATA BROKER PROFILES</span>
+                            <p class="leading-snug">Data brokers merge those signals with public records and shopping histories to build full profiles.</p>
+                        </div>
+                    </div>
+                </div>
 
-  .bc-section-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-
-  .bc-section-header h2 {
-    font-size: 28px;
-    font-weight: 700;
-    margin: 0 0 14px 0;
-    color: #ffffff;
-    letter-spacing: -0.02em;
-  }
-
-  .bc-section-header p {
-    font-size: 16px;
-    color: #94a3b8;
-    max-width: 620px;
-    margin: 0 auto;
-  }
-
-  /* Control Bar (Privacy Toggle + Replay Button) */
-  .bc-controls-card {
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 16px;
-    padding: 24px 28px;
-    margin-bottom: 32px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .bc-toggle-info h3 {
-    margin: 0 0 4px 0;
-    font-size: 17px;
-    font-weight: 600;
-    color: #f8fafc;
-  }
-
-  .bc-toggle-info p {
-    margin: 0;
-    font-size: 14px;
-    color: #94a3b8;
-  }
-
-  .bc-control-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  /* Toggle Switch */
-  .bc-switch {
-    position: relative;
-    display: inline-block;
-    width: 56px;
-    height: 30px;
-  }
-
-  .bc-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .bc-slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background-color: #475569;
-    border-radius: 30px;
-    transition: 0.3s;
-  }
-
-  .bc-slider:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 4px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    transition: 0.3s;
-  }
-
-  .bc-switch input:checked + .bc-slider {
-    background-color: #10b981;
-  }
-
-  .bc-switch input:checked + .bc-slider:before {
-    transform: translateX(26px);
-  }
-
-  .bc-replay-btn {
-    background: #334155;
-    color: #f8fafc;
-    border: 1px solid #475569;
-    padding: 10px 18px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .bc-replay-btn:hover {
-    background: #475569;
-  }
-
-  /* Main Price Hero Card */
-  .bc-hero-card {
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 16px;
-    padding: 36px 32px;
-    margin-bottom: 32px;
-    text-align: center;
-  }
-
-  .bc-hero-label {
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #94a3b8;
-    margin-bottom: 12px;
-    font-weight: 600;
-  }
-
-  .bc-hero-price {
-    font-size: 54px;
-    font-weight: 800;
-    color: #38bdf8;
-    line-height: 1.1;
-    margin-bottom: 12px;
-    transition: color 0.3s;
-  }
-
-  .bc-hero-price.bc-protected {
-    color: #10b981;
-  }
-
-  .bc-hero-subtext {
-    font-size: 15px;
-    color: #cbd5e1;
-    margin-bottom: 16px;
-  }
-
-  .bc-drop-badge {
-    display: inline-block;
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.4);
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 8px;
-  }
-
-  /* Bidding War Feed Card */
-  .bc-card {
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 16px;
-    padding: 32px;
-    margin-bottom: 32px;
-  }
-
-  .bc-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #334155;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .bc-card-header h3 {
-    margin: 0;
-    font-size: 19px;
-    font-weight: 700;
-    color: #ffffff;
-  }
-
-  .bc-timer-pill {
-    background: #0f172a;
-    border: 1px solid #334155;
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-family: monospace;
-    font-size: 14px;
-    color: #38bdf8;
-  }
-
-  .bc-bid-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .bc-bid-row {
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    opacity: 0.35;
-    transform: translateY(4px);
-    transition: all 0.25s ease;
-  }
-
-  .bc-bid-row.bc-active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .bc-bid-row.bc-winner {
-    border-color: #10b981;
-    background: rgba(16, 185, 129, 0.08);
-  }
-
-  .bc-bidder-info strong {
-    display: block;
-    font-size: 16px;
-    color: #f8fafc;
-    margin-bottom: 2px;
-  }
-
-  .bc-bidder-info span {
-    font-size: 13px;
-    color: #94a3b8;
-  }
-
-  .bc-bid-right {
-    text-align: right;
-  }
-
-  .bc-bid-amount {
-    font-size: 18px;
-    font-weight: 700;
-    color: #f8fafc;
-    display: block;
-  }
-
-  .bc-bid-status {
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .bc-status-win { color: #34d399; }
-  .bc-status-outbid { color: #94a3b8; }
-  .bc-status-timeout { color: #f87171; }
-
-  /* Itemized Receipt Ledger */
-  .bc-ledger-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .bc-ledger-item {
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 18px 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .bc-ledger-desc strong {
-    display: block;
-    font-size: 16px;
-    color: #f8fafc;
-    margin-bottom: 4px;
-  }
-
-  .bc-ledger-desc span {
-    font-size: 14px;
-    color: #94a3b8;
-  }
-
-  .bc-ledger-price {
-    font-size: 18px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-  .bc-price-plus { color: #38bdf8; }
-  .bc-price-minus { color: #34d399; }
-</style>
-
-<section class="bc-auction-wrapper" id="bc-auction-app">
-  <div class="bc-section-header">
-    <h2>Live Ad Auction: What Your Attention Costs</h2>
-    <p>
-      Every time you load a webpage, automated ad companies hold a split-second auction to show you an ad. 
-      Here is what your browser's clues are worth right now.
-    </p>
-  </div>
-
-  <!-- Interactive Privacy Toggle -->
-  <div class="bc-controls-card">
-    <div class="bc-toggle-info">
-      <h3>Test Privacy Mode (Hide Your Clues)</h3>
-      <p>Flip this switch to see your price tag drop when tracking signals are blocked.</p>
-    </div>
-    <div class="bc-control-actions">
-      <label class="bc-switch" aria-label="Toggle Privacy Mode">
-        <input type="checkbox" id="bc-privacy-toggle">
-        <span class="bc-slider"></span>
-      </label>
-      <button type="button" class="bc-replay-btn" id="bc-replay-btn">Replay Auction</button>
-    </div>
-  </div>
-
-  <!-- Winning Price Display -->
-  <div class="bc-hero-card">
-    <div class="bc-hero-label" id="bc-hero-status">Running Live Auction...</div>
-    <div class="bc-hero-price" id="bc-hero-price">$0.00</div>
-    <div class="bc-hero-subtext" id="bc-hero-subtext">
-      Price advertisers pay per 1,000 views from a device like yours
-    </div>
-    <div id="bc-drop-container"></div>
-  </div>
-
-  <!-- 180ms Live Bidding War -->
-  <div class="bc-card">
-    <div class="bc-card-header">
-      <h3>Ad Companies Competing for Your Screen</h3>
-      <div class="bc-timer-pill" id="bc-auction-clock">Time elapsed: 0 ms</div>
-    </div>
-    <div class="bc-bid-list" id="bc-bid-list">
-      <!-- Populated automatically by JavaScript -->
-    </div>
-  </div>
-
-  <!-- Plain-English Price Breakdown -->
-  <div class="bc-card">
-    <div class="bc-card-header">
-      <h3>Why You Cost This Much (Your Device Receipt)</h3>
-    </div>
-    <div class="bc-ledger-list" id="bc-ledger-list">
-      <!-- Populated automatically by JavaScript -->
-    </div>
-  </div>
-</section>
-
-<script>
-(function () {
-  let activeTimers = [];
-  let baselineWinningBid = 0;
-
-  // 1. Inspect Real Browser Clues Safely
-  function getRealBrowserSignals() {
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "Unknown";
-    const isTier1Region = /^(America|Europe|Australia|Pacific\/Auckland)/.test(tz);
-
-    const pixelRatio = window.devicePixelRatio || 1;
-    const screenW = window.screen ? window.screen.width : 1280;
-    const screenH = window.screen ? window.screen.height : 720;
-    const isHighRes = pixelRatio >= 2 || screenW >= 1920;
-
-    const cores = navigator.hardwareConcurrency || 4;
-    const memory = navigator.deviceMemory || 4;
-    const isHighEndHardware = cores >= 8 || memory >= 8;
-
-    let gpuName = "Standard Graphics";
-    try {
-      const canvas = document.createElement("canvas");
-      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-      if (gl) {
-        const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-        if (debugInfo) {
-          gpuName = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || gpuName;
-        }
-      }
-    } catch (e) {}
-
-    const hasPrivacyFlags =
-      navigator.doNotTrack === "1" ||
-      navigator.globalPrivacyControl === true ||
-      /Brave/i.test(navigator.userAgent);
-
-    return {
-      tz,
-      isTier1Region,
-      pixelRatio,
-      screenW,
-      screenH,
-      isHighRes,
-      cores,
-      gpuName,
-      isHighEndHardware,
-      hasPrivacyFlags
-    };
-  }
-
-  // 2. Build Itemized Breakdown & Total Value
-  function calculateValuation(isPrivacySimulated) {
-    const signals = getRealBrowserSignals();
-    const items = [];
-    let total = 0.35; // Base floor price for any empty ad slot
-
-    items.push({
-      title: "Base Ad Slot Value",
-      detail: "Starting minimum price just for loading a webpage",
-      amount: 0.35
-    });
-
-    if (isPrivacySimulated) {
-      items.push({
-        title: "Location & Time Zone Hidden",
-        detail: "Masked to generic UTC time — advertisers cannot tell where you live",
-        amount: 0.10
-      });
-      items.push({
-        title: "Screen Size & Sharpness Masked",
-        detail: "Reported as a generic basic screen (1024×768)",
-        amount: 0.05
-      });
-      items.push({
-        title: "Device Speed & Graphics Hidden",
-        detail: "Hardware details blocked so companies cannot guess your device price",
-        amount: 0.05
-      });
-      items.push({
-        title: "Anti-Tracking Signal Active",
-        detail: "Your browser told ad networks 'Do Not Track Me'",
-        amount: -0.15
-      });
-    } else {
-      // Location Clue
-      const locValue = signals.isTier1Region ? 1.45 : 0.55;
-      items.push({
-        title: `Your Time Zone (${signals.tz})`,
-        detail: signals.isTier1Region
-          ? "Located in a high-spending consumer region"
-          : "Located in a standard ad-market region",
-        amount: locValue
-      });
-
-      // Screen Clue
-      const screenValue = signals.isHighRes ? 1.15 : 0.45;
-      items.push({
-        title: `Screen Sharpness (${signals.screenW}×${signals.screenH}, ${signals.pixelRatio}x clarity)`,
-        detail: signals.isHighRes
-          ? "High-definition display — signals a modern phone, tablet, or laptop"
-          : "Standard resolution display",
-        amount: screenValue
-      });
-
-      // Hardware Clue
-      const hwValue = signals.isHighEndHardware ? 0.95 : 0.40;
-      const shortGpu = signals.gpuName.length > 36 ? signals.gpuName.slice(0, 36) + "..." : signals.gpuName;
-      items.push({
-        title: `Device Speed (${signals.cores} Processor Cores)`,
-        detail: `Graphics chip: ${shortGpu}`,
-        amount: hwValue
-      });
-
-      // Privacy Clue
-      if (signals.hasPrivacyFlags) {
-        items.push({
-          title: "Privacy Protections Detected",
-          detail: "Your browser already blocks some tracking, lowering your price tag",
-          amount: -0.75
-        });
-      } else {
-        items.push({
-          title: "Open Tracking Signature",
-          detail: "No privacy blocker detected — easy for ad companies to recognize",
-          amount: 0.65
-        });
-      }
-    }
-
-    total = items.reduce((sum, item) => sum + item.amount, 0);
-    total = Math.max(0.25, Number(total.toFixed(2)));
-
-    if (!isPrivacySimulated) {
-      baselineWinningBid = total;
-    }
-
-    return { total, items };
-  }
-
-  // 3. Render the Itemized Receipt
-  function renderLedger(items) {
-    const ledgerEl = document.getElementById("bc-ledger-list");
-    ledgerEl.innerHTML = items
-      .map((item) => {
-        const isPositive = item.amount >= 0;
-        const formatted = isPositive
-          ? `+$${item.amount.toFixed(2)}`
-          : `-$${Math.abs(item.amount).toFixed(2)}`;
-        const colorClass = isPositive ? "bc-price-plus" : "bc-price-minus";
-
-        return `
-          <div class="bc-ledger-item">
-            <div class="bc-ledger-desc">
-              <strong>${item.title}</strong>
-              <span>${item.detail}</span>
-            </div>
-            <div class="bc-ledger-price ${colorClass}">${formatted}</div>
-          </div>
-        `;
-      })
-      .join("");
-  }
-
-  // 4. Animate the 180ms Multi-Buyer Auction
-  function runAuction() {
-    activeTimers.forEach(clearTimeout);
-    activeTimers = [];
-
-    const isPrivacySimulated = document.getElementById("bc-privacy-toggle").checked;
-    const { total: winningPrice, items } = calculateValuation(isPrivacySimulated);
-
-    renderLedger(items);
-
-    const heroPriceEl = document.getElementById("bc-hero-price");
-    const heroStatusEl = document.getElementById("bc-hero-status");
-    const heroSubtextEl = document.getElementById("bc-hero-subtext");
-    const dropContainerEl = document.getElementById("bc-drop-container");
-    const clockEl = document.getElementById("bc-auction-clock");
-    const bidListEl = document.getElementById("bc-bid-list");
-
-    heroStatusEl.textContent = "Companies Bidding Right Now...";
-    heroPriceEl.classList.toggle("bc-protected", isPrivacySimulated);
-    dropContainerEl.innerHTML = "";
-
-    // Build 6 competing ad buyers with staggered millisecond arrival times
-    const bidders = [
-      {
-        name: "PubMatic",
-        role: "Automated Ad Marketplace",
-        ms: 34,
-        bid: Number((winningPrice * 0.62).toFixed(2)),
-        timeout: false
-      },
-      {
-        name: "Index Exchange",
-        role: "Publisher Ad Network",
-        ms: 68,
-        bid: Number((winningPrice * 0.78).toFixed(2)),
-        timeout: false
-      },
-      {
-        name: "Criteo",
-        role: "Shopping & Retargeting Ads",
-        ms: 105,
-        bid: Number((winningPrice * 0.89).toFixed(2)),
-        timeout: false
-      },
-      {
-        name: "Magnite",
-        role: "Video & Banner Ad Exchange",
-        ms: 138,
-        bid: winningPrice,
-        timeout: false,
-        isWinner: true
-      },
-      {
-        name: "The Trade Desk",
-        role: "Major Brand Ad Buyer",
-        ms: 162,
-        bid: Number((winningPrice * 0.94).toFixed(2)),
-        timeout: false
-      },
-      {
-        name: "OpenX",
-        role: "Real-Time Ad Network",
-        ms: 195,
-        bid: 0,
-        timeout: true
-      }
-    ];
-
-    bidListEl.innerHTML = bidders
-      .map(
-        (b, idx) => `
-        <div class="bc-bid-row" id="bc-bid-row-${idx}">
-          <div class="bc-bidder-info">
-            <strong>${b.name}</strong>
-            <span>${b.role} • Responded at ${b.ms} ms</span>
-          </div>
-          <div class="bc-bid-right">
-            <span class="bc-bid-amount" id="bc-bid-amt-${idx}">Waiting...</span>
-            <span class="bc-bid-status" id="bc-bid-stat-${idx}"></span>
-          </div>
-        </div>
-      `
-      )
-      .join("");
-
-    let currentHigh = 0;
-
-    // Animate each bidder appearing in sequence
-    bidders.forEach((b, idx) => {
-      const visualDelay = idx * 320 + 150; // Slowed down so human eyes can follow
-      const timer = setTimeout(() => {
-        clockEl.textContent = `Auction clock: ${Math.min(b.ms, 180)} ms`;
-        const rowEl = document.getElementById(`bc-bid-row-${idx}`);
-        const amtEl = document.getElementById(`bc-bid-amt-${idx}`);
-        const statEl = document.getElementById(`bc-bid-stat-${idx}`);
-
-        rowEl.classList.add("bc-active");
-
-        if (b.timeout) {
-          amtEl.textContent = "No Bid";
-          statEl.textContent = "Too Slow (Missed 180ms Cutoff)";
-          statEl.className = "bc-bid-status bc-status-timeout";
-        } else {
-          amtEl.textContent = `$${b.bid.toFixed(2)}`;
-          if (b.bid > currentHigh) {
-            currentHigh = b.bid;
-            heroPriceEl.textContent = `$${currentHigh.toFixed(2)}`;
-            statEl.textContent = "Highest Bid";
-            statEl.className = "bc-bid-status bc-status-win";
-          } else {
-            statEl.textContent = "Outbid";
-            statEl.className = "bc-bid-status bc-status-outbid";
-          }
-        }
-      }, visualDelay);
-
-      activeTimers.push(timer);
-    });
-
-    // Finalize auction state
-    const finishTimer = setTimeout(() => {
-      clockEl.textContent = "Auction settled in 176 ms";
-      heroStatusEl.textContent = isPrivacySimulated
-        ? "Winning Bid (With Privacy Mode ON)"
-        : "Winning Bid (Your Current Device)";
-
-      const perVisitCents = (winningPrice / 10).toFixed(2);
-      heroSubtextEl.textContent = `Advertisers pay $${winningPrice.toFixed(2)} per 1,000 views (about ${perVisitCents}¢ for this single visit)`;
-
-      bidders.forEach((b, idx) => {
-        const rowEl = document.getElementById(`bc-bid-row-${idx}`);
-        const statEl = document.getElementById(`bc-bid-stat-${idx}`);
-        if (b.isWinner) {
-          rowEl.classList.add("bc-winner");
-          statEl.textContent = "WINNER";
-          statEl.className = "bc-bid-status bc-status-win";
-        } else if (!b.timeout) {
-          statEl.textContent = "Outbid";
-          statEl.className = "bc-bid-status bc-status-outbid";
-        }
-      });
-
-      if (isPrivacySimulated && baselineWinningBid > winningPrice) {
-        const dropPercent = Math.round(
-          ((baselineWinningBid - winningPrice) / baselineWinningBid) * 100
-        );
-        dropContainerEl.innerHTML = `
-          <div class="bc-drop-badge">
-            Your ad value dropped by ${dropPercent}% (Down from $${baselineWinningBid.toFixed(2)})
-          </div>
-        `;
-      }
-    }, bidders.length * 320 + 250);
-
-    activeTimers.push(finishTimer);
-  }
-
-  // Event Listeners
-  document.getElementById("bc-privacy-toggle").addEventListener("change", runAuction);
-  document.getElementById("bc-replay-btn").addEventListener("click", runAuction);
-
-  // Run immediately on page load
-  runAuction();
-})();
-</script>
-                                
                 <!-- SEQUENTIAL FOOTER BUTTON FOR TAB 01 -->
-                <div class="pt-4 flex justify-end">
-                    <button onclick="switchMainTab('tab02')" class="px-6 py-3.5 bg-amberWarning hover:bg-amber-400 text-black font-mono font-extrabold text-xs uppercase rounded shadow-xl flex items-center gap-2 transition-all cursor-pointer">
-                        <span>SEE WHO BUYS THESE CLUES → GO TO TAB 02: FLIP THE SCRIPT</span>
+                <div class="flex justify-end">
+                    <button type="button" onclick="switchMainTab('tab02')" class="px-5 py-3 bg-amberWarning hover:bg-amber-400 text-black font-mono font-extrabold text-xs uppercase rounded shadow-xl cursor-pointer">
+                        SEE WHO BUYS THESE CLUES → GO TO TAB 02: FLIP THE SCRIPT
                     </button>
                 </div>
             </div>
 
-            <!-- TAB 02 CONTENT: FLIP THE SCRIPT (DATA BROKER SCORECARDS & WARRANT LOOPHOLE) -->
-            <div id="contentTab02" class="hidden space-y-8">
-
-                <!-- TAB 02 PLAIN-ENGLISH ORIENTATION BANNER -->
-                <div class="zine-card bg-cardSurface p-6 rounded-lg space-y-4">
-                    <div class="border-b border-zinc-800 pb-3">
-                        <span class="text-xs font-mono text-amberWarning font-bold uppercase tracking-widest">[ WHAT AM I LOOKING AT? ]</span>
-                        <h3 class="text-lg font-mono font-bold text-white mt-1">WHO BUYS YOUR BROWSER CLUES & WHY</h3>
-                        <p class="text-xs md:text-sm text-zinc-300 font-sans leading-relaxed mt-1">
-                            The silent device signals shown in Tab 01 do not stay on your screen. Commercial data brokers scrape bidstream payloads, mobile app SDKs, and IP logs to build shadow profiles on millions of working families.
+            <!-- TAB 02 CONTENT: FLIP THE SCRIPT -->
+            <div id="contentTab02" class="hidden space-y-6">
+                <div class="zine-card bg-cardSurface p-5 rounded-lg space-y-3">
+                    <div class="border-b border-zinc-800 pb-2.5">
+                        <span class="text-xs font-mono text-amberWarning font-bold uppercase">[ WHAT AM I LOOKING AT? ]</span>
+                        <h3 class="text-base font-mono font-bold text-white mt-0.5">WHO BUYS YOUR BROWSER CLUES & WHY</h3>
+                        <p class="text-xs text-zinc-300 font-sans leading-relaxed mt-1">
+                            Commercial data brokers scrape real-time ad auction feeds and mobile app SDKs to build shadow profiles on millions of everyday people.
                         </p>
                     </div>
-
-                    <!-- Severity Legend Badges -->
-                    <div class="flex flex-wrap items-center gap-3 font-mono text-xs pt-1">
-                        <span class="text-zinc-400">SEVERITY RATING LEGEND:</span>
-                        <span class="px-2.5 py-1 bg-crimsonAccent/20 border border-crimsonAccent text-crimsonAccent rounded font-bold">
-                            🔴 CRITICAL / FEDERAL ORDER
-                        </span>
-                        <span class="px-2.5 py-1 bg-amberWarning/20 border border-amberWarning text-amberWarning rounded font-bold">
-                            🟠 HIGH / WATCHDOG AUDIT
-                        </span>
-                        <span class="px-2.5 py-1 bg-cyberBlue/20 border border-cyberBlue text-cyberBlue rounded font-bold">
-                            🔵 ACTIVE SYSTEMIC RISK
-                        </span>
+                    <div class="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+                        <span class="text-zinc-400">SEVERITY LEGEND:</span>
+                        <span class="px-2 py-0.5 bg-crimsonAccent/20 border border-crimsonAccent text-crimsonAccent rounded font-bold">🔴 FEDERAL ENFORCEMENT ORDER</span>
+                        <span class="px-2 py-0.5 bg-amberWarning/20 border border-amberWarning text-amberWarning rounded font-bold">🟠 WATCHDOG AUDIT</span>
+                        <span class="px-2 py-0.5 bg-cyberBlue/20 border border-cyberBlue text-cyberBlue rounded font-bold">🔵 ACTIVE SYSTEMIC RISK</span>
                     </div>
                 </div>
 
-                <!-- 5 BROKER SCORECARDS -->
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center border-b border-zinc-800 pb-2">
-                        <h3 class="font-mono font-bold text-white text-sm uppercase">BROKER SEVERITY SCORECARDS</h3>
-                        <span class="text-xs font-mono text-zinc-400">OFFICIAL GOVERNMENT AUDIT RECORDS</span>
-                    </div>
-
-                    <!-- Broker 1: Mobilewalla -->
-                    <div class="zine-card bg-cardSurface p-5 rounded-lg space-y-3">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-zinc-800 pb-3">
+                <!-- 5 Broker Scorecards in 2-Column Grid for Less Scrolling -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
+                        <div class="flex justify-between items-start gap-2 border-b border-zinc-800 pb-2">
                             <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-mono font-bold text-base text-white">MOBILEWALLA</h4>
-                                    <span class="px-2 py-0.5 bg-crimsonAccent/20 border border-crimsonAccent text-crimsonAccent font-mono text-[10px] font-bold rounded">🔴 CRITICAL / FEDERAL ORDER</span>
-                                </div>
-                                <span class="text-xs font-mono text-zinc-400">FTC Enforcement Docket No. C-4813</span>
+                                <h4 class="font-mono font-bold text-sm text-white">MOBILEWALLA</h4>
+                                <span class="text-[11px] font-mono text-zinc-400">FTC Docket No. C-4813</span>
                             </div>
-                            <button onclick="copyText('FTC Docket No. C-4813')" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono rounded cursor-pointer">
-                                COPY DOCKET ID
-                            </button>
+                            <button type="button" onclick="copyText('FTC Docket No. C-4813')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[11px] font-mono rounded cursor-pointer">COPY ID</button>
                         </div>
-                        <p class="text-xs text-zinc-300 font-sans leading-relaxed">
-                            First federal order banning a commercial data broker from retaining sensitive consumer location trails derived from real-time bidding auction payloads for outside profiling.
+                        <p class="text-xs text-zinc-300 font-sans leading-snug">
+                            First federal order banning a data broker from keeping consumer location trails pulled out of real-time ad auctions.
                         </p>
                     </div>
 
-                    <!-- Broker 2: Gravy Analytics & Venntel -->
-                    <div class="zine-card bg-cardSurface p-5 rounded-lg space-y-3">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-zinc-800 pb-3">
+                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
+                        <div class="flex justify-between items-start gap-2 border-b border-zinc-800 pb-2">
                             <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-mono font-bold text-base text-white">GRAVY ANALYTICS & VENNTEL</h4>
-                                    <span class="px-2 py-0.5 bg-amberWarning/20 border border-amberWarning text-amberWarning font-mono text-[10px] font-bold rounded">🟠 HIGH / WATCHDOG AUDIT</span>
-                                </div>
-                                <span class="text-xs font-mono text-zinc-400">FTC Matter No. 2123024 & DHS OIG-23-61</span>
+                                <h4 class="font-mono font-bold text-sm text-white">GRAVY ANALYTICS & VENNTEL</h4>
+                                <span class="text-[11px] font-mono text-zinc-400">FTC Matter No. 2123024 & DHS OIG-23-61</span>
                             </div>
-                            <button onclick="copyText('FTC Matter No. 2123024')" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono rounded cursor-pointer">
-                                COPY MATTER ID
-                            </button>
+                            <button type="button" onclick="copyText('FTC Matter No. 2123024')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[11px] font-mono rounded cursor-pointer">COPY ID</button>
                         </div>
-                        <p class="text-xs text-zinc-300 font-sans leading-relaxed">
-                            Banned from selling sensitive location trails while explicitly maintaining carved-out exemptions for supplying federal law enforcement buyers (DHS, CBP, ICE).
+                        <p class="text-xs text-zinc-300 font-sans leading-snug">
+                            Banned from selling sensitive location trails commercially while maintaining carved-out exemptions for federal agency contracts.
                         </p>
                     </div>
 
-                    <!-- Broker 3: Kochava Inc. -->
-                    <div class="zine-card bg-cardSurface p-5 rounded-lg space-y-3">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-zinc-800 pb-3">
+                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
+                        <div class="flex justify-between items-start gap-2 border-b border-zinc-800 pb-2">
                             <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-mono font-bold text-base text-white">KOCHAVA INC.</h4>
-                                    <span class="px-2 py-0.5 bg-crimsonAccent/20 border border-crimsonAccent text-crimsonAccent font-mono text-[10px] font-bold rounded">🔴 CRITICAL / FEDERAL ORDER</span>
-                                </div>
-                                <span class="text-xs font-mono text-zinc-400">U.S. District Court Case No. 2:22-cv-00377</span>
+                                <h4 class="font-mono font-bold text-sm text-white">KOCHAVA INC.</h4>
+                                <span class="text-[11px] font-mono text-zinc-400">U.S. District Court Case No. 2:22-cv-00377</span>
                             </div>
-                            <button onclick="copyText('2:22-cv-00377')" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono rounded cursor-pointer">
-                                COPY CASE ID
-                            </button>
+                            <button type="button" onclick="copyText('2:22-cv-00377')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[11px] font-mono rounded cursor-pointer">COPY ID</button>
                         </div>
-                        <p class="text-xs text-zinc-300 font-sans leading-relaxed">
-                            Federal lawsuit and proposed order over selling precise location data feeds that mapped consumer movements to sensitive locations without plain-language consent.
+                        <p class="text-xs text-zinc-300 font-sans leading-snug">
+                            Federal lawsuit over selling precise location feeds mapping movements to sensitive medical and personal locations without consent.
                         </p>
                     </div>
 
-                    <!-- Broker 4: X-Mode Social / Outlogic -->
-                    <div class="zine-card bg-cardSurface p-5 rounded-lg space-y-3">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-zinc-800 pb-3">
+                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2">
+                        <div class="flex justify-between items-start gap-2 border-b border-zinc-800 pb-2">
                             <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-mono font-bold text-base text-white">X-MODE SOCIAL / OUTLOGIC</h4>
-                                    <span class="px-2 py-0.5 bg-crimsonAccent/20 border border-crimsonAccent text-crimsonAccent font-mono text-[10px] font-bold rounded">🔴 CRITICAL / FEDERAL ORDER</span>
-                                </div>
-                                <span class="text-xs font-mono text-zinc-400">FTC Enforcement Docket No. C-4802</span>
+                                <h4 class="font-mono font-bold text-sm text-white">X-MODE SOCIAL / OUTLOGIC</h4>
+                                <span class="text-[11px] font-mono text-zinc-400">FTC Docket No. C-4802</span>
                             </div>
-                            <button onclick="copyText('FTC Docket No. C-4802')" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono rounded cursor-pointer">
-                                COPY DOCKET ID
-                            </button>
+                            <button type="button" onclick="copyText('FTC Docket No. C-4802')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[11px] font-mono rounded cursor-pointer">COPY ID</button>
                         </div>
-                        <p class="text-xs text-zinc-300 font-sans leading-relaxed">
-                            First federal ban stopping a data broker from selling sensitive location tracks gathered through software development kits (SDKs) embedded inside everyday mobile apps.
+                        <p class="text-xs text-zinc-300 font-sans leading-snug">
+                            First federal ban stopping a broker from selling location tracks collected via software code inside everyday mobile apps.
                         </p>
                     </div>
 
-                    <!-- Broker 5: Babel Street / Locate X -->
-                    <div class="zine-card bg-cardSurface p-5 rounded-lg space-y-3">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-zinc-800 pb-3">
+                    <div class="zine-card bg-cardSurface p-4 rounded-lg space-y-2 md:col-span-2">
+                        <div class="flex justify-between items-start gap-2 border-b border-zinc-800 pb-2">
                             <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-mono font-bold text-base text-white">BABEL STREET / LOCATE X</h4>
-                                    <span class="px-2 py-0.5 bg-cyberBlue/20 border border-cyberBlue text-cyberBlue font-mono text-[10px] font-bold rounded">🔵 ACTIVE SYSTEMIC RISK</span>
-                                </div>
-                                <span class="text-xs font-mono text-zinc-400">USAspending.gov Public Contract Records</span>
+                                <h4 class="font-mono font-bold text-sm text-white">BABEL STREET / LOCATE X</h4>
+                                <span class="text-[11px] font-mono text-zinc-400">USAspending.gov Public Contract Records</span>
                             </div>
-                            <button onclick="copyText('Babel Street USAspending')" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono rounded cursor-pointer">
-                                COPY VENDOR NAME
-                            </button>
+                            <button type="button" onclick="copyText('Babel Street USAspending')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[11px] font-mono rounded cursor-pointer">COPY NAME</button>
                         </div>
-                        <p class="text-xs text-zinc-300 font-sans leading-relaxed">
-                            Sells search software enabling government investigators to draw virtual boundaries anywhere on earth and query historical mobile location tracks without 4th Amendment warrants.
+                        <p class="text-xs text-zinc-300 font-sans leading-snug">
+                            Sells search tools allowing investigators to draw virtual boundaries on a map and query historical phone location trails without a judicial warrant.
                         </p>
                     </div>
                 </div>
 
-                <!-- SECRET ESCROW / WARRANT LOOPHOLE LEDGER -->
-                <div class="bg-cardSurface border border-zinc-800 rounded-lg p-6 space-y-4">
-                    <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-                        <h3 class="font-mono font-bold text-white text-sm uppercase flex items-center gap-2">
-                            <span class="text-crimsonAccent">[SECRET ESCROW LEDGER]</span> THE WARRANT LOOPHOLE
-                        </h3>
-                        <span class="text-xs font-mono text-zinc-500">OFFICIAL WATCHDOG AUDITS</span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
+                <!-- Warrant Loophole Ledger -->
+                <div class="bg-cardSurface border border-zinc-800 rounded-lg p-4 space-y-3">
+                    <h3 class="font-mono font-bold text-white text-xs uppercase border-b border-zinc-800 pb-2">
+                        <span class="text-crimsonAccent">[THE WARRANT LOOPHOLE]</span> OFFICIAL WATCHDOG AUDITS
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
+                        <div class="p-3 bg-darkBg border border-zinc-800 rounded space-y-1">
                             <div class="flex justify-between items-center">
                                 <span class="text-amberWarning font-bold">DHS OIG REPORT OIG-23-61</span>
-                                <button onclick="copyText('DHS OIG-23-61')" class="px-2 py-0.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] cursor-pointer">COPY ID</button>
+                                <button type="button" onclick="copyText('DHS OIG-23-61')" class="px-2 py-0.5 bg-zinc-800 text-zinc-200 rounded text-[10px] cursor-pointer">COPY</button>
                             </div>
-                            <p class="text-zinc-300 text-[11px] leading-relaxed font-sans">
-                                Official watchdog audit confirming CBP (55,000+ queries) and ICE (16,000+ queries) searched commercial phone location databases without warrants.
-                            </p>
+                            <p class="text-zinc-300 text-[11px] font-sans">Watchdog audit confirming CBP and ICE queried commercial phone location databases without warrants.</p>
                         </div>
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
+                        <div class="p-3 bg-darkBg border border-zinc-800 rounded space-y-1">
                             <div class="flex justify-between items-center">
                                 <span class="text-amberWarning font-bold">IRS-CI TIGTA REVIEW</span>
-                                <button onclick="copyText('TIGTA Venntel Review')" class="px-2 py-0.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] cursor-pointer">COPY ID</button>
+                                <button type="button" onclick="copyText('TIGTA Venntel Review')" class="px-2 py-0.5 bg-zinc-800 text-zinc-200 rounded text-[10px] cursor-pointer">COPY</button>
                             </div>
-                            <p class="text-zinc-300 text-[11px] leading-relaxed font-sans">
-                                Treasury Inspector General audit confirming IRS Criminal Investigation investigators subscribed to commercial phone-tracking feeds without a judicial warrant.
-                            </p>
+                            <p class="text-zinc-300 text-[11px] font-sans">Treasury Inspector General audit confirming IRS Criminal Investigation subscribed to commercial phone-tracking feeds.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- SEQUENTIAL FOOTER BUTTON FOR TAB 02 -->
-                <div class="pt-4 flex justify-end">
-                    <button onclick="switchMainTab('tab03')" class="px-6 py-3.5 bg-amberWarning hover:bg-amber-400 text-black font-mono font-extrabold text-xs uppercase rounded shadow-xl flex items-center gap-2 transition-all cursor-pointer">
-                        <span>VERIFY THE FTC & DHS RECORDS YOURSELF → GO TO TAB 03: PROOF ROOM</span>
+                <div class="flex justify-end">
+                    <button type="button" onclick="switchMainTab('tab03')" class="px-5 py-3 bg-amberWarning hover:bg-amber-400 text-black font-mono font-extrabold text-xs uppercase rounded shadow-xl cursor-pointer">
+                        VERIFY THE RECORDS YOURSELF → GO TO TAB 03: PROOF ROOM
                     </button>
                 </div>
             </div>
 
             <!-- TAB 03 CONTENT: .GOV & .US PROOF ROOM -->
-            <div id="contentTab03" class="hidden space-y-8">
-
-                <!-- PROOF ROOM HERO HEADER & 3-STEP SELF-VERIFICATION GUIDE -->
-                <div class="bg-cardSurface border border-zinc-800 rounded-lg p-6 space-y-5">
-                    <div class="border-b border-zinc-800 pb-3">
-                        <span class="text-xs font-mono text-emeraldSuccess font-bold uppercase tracking-widest">[ 100% FACT-CHECKED ]</span>
-                        <h3 class="font-mono font-bold text-white text-lg uppercase mt-1">
-                            OFFICIAL GOVERNMENT REFERENCE DIRECTORY (.GOV / .US)
-                        </h3>
-                        <p class="text-xs md:text-sm text-zinc-300 font-sans mt-1">
-                            Zero blogs. Zero opinion pieces. Every claim on this page is verified directly through official U.S. government primary source records.
-                        </p>
-                    </div>
-
-                    <!-- 3-Step Self-Verification Guide -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
-                        <div class="p-3.5 bg-darkBg border border-zinc-800 rounded space-y-1">
-                            <span class="text-amberWarning font-bold block">STEP 01</span>
-                            <span class="text-white font-bold block">Copy Official Case ID</span>
-                            <p class="text-zinc-400 text-[11px] font-sans">Click any "COPY CASE ID" button in the matrix below.</p>
-                        </div>
-                        <div class="p-3.5 bg-darkBg border border-zinc-800 rounded space-y-1">
-                            <span class="text-amberWarning font-bold block">STEP 02</span>
-                            <span class="text-white font-bold block">Visit Official Portal</span>
-                            <p class="text-zinc-400 text-[11px] font-sans">Navigate directly to the verified .gov domain shown.</p>
-                        </div>
-                        <div class="p-3.5 bg-darkBg border border-zinc-800 rounded space-y-1">
-                            <span class="text-amberWarning font-bold block">STEP 03</span>
-                            <span class="text-white font-bold block">Read Primary Record</span>
-                            <p class="text-zinc-400 text-[11px] font-sans">Paste the case ID into the official search bar to read the unedited verdict.</p>
-                        </div>
-                    </div>
+            <div id="contentTab03" class="hidden space-y-6">
+                <div class="bg-cardSurface border border-zinc-800 rounded-lg p-5 space-y-3">
+                    <span class="text-xs font-mono text-emeraldSuccess font-bold uppercase">[ 100% PRIMARY SOURCES ]</span>
+                    <h3 class="font-mono font-bold text-white text-base uppercase">
+                        OFFICIAL GOVERNMENT REFERENCE DIRECTORY (.GOV / .US)
+                    </h3>
+                    <p class="text-xs text-zinc-300 font-sans">
+                        Copy any official docket number below and paste it directly into the listed .gov portal to read the unedited public record.
+                    </p>
                 </div>
 
-                <!-- 8-ROW OFFICIAL GOVERNMENT REFERENCE DIRECTORY -->
-                <div class="bg-cardSurface border border-zinc-800 rounded-lg p-6 space-y-4">
-                    <h4 class="font-mono font-bold text-white text-sm uppercase border-b border-zinc-800 pb-2">
-                        PRIMARY SOURCE REPOSITORY
-                    </h4>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
-                        <!-- Record 1 -->
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <a href="https://www.ftc.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline flex items-center gap-1">
-                                        <span>ftc.gov</span> ↗
-                                    </a>
-                                    <span class="text-white text-xs font-bold block">FTC v. Mobilewalla (Docket No. C-4813)</span>
-                                </div>
-                                <button onclick="copyText('FTC Docket No. C-4813')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">
-                                    COPY CASE ID
-                                </button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 font-mono text-xs">
+                    <div class="p-3.5 bg-cardSurface border border-zinc-800 rounded space-y-1.5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <a href="https://www.ftc.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline">ftc.gov ↗</a>
+                                <span class="text-white font-bold block">FTC v. Mobilewalla (Docket No. C-4813)</span>
                             </div>
-                            <p class="text-zinc-400 text-[11px] font-sans">
-                                Banned data broker from retaining consumer data pulled out of split-second RTB auctions for profiling.
-                            </p>
+                            <button type="button" onclick="copyText('FTC Docket No. C-4813')" class="px-2 py-1 bg-zinc-800 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">COPY ID</button>
                         </div>
-
-                        <!-- Record 2 -->
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <a href="https://www.ftc.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline flex items-center gap-1">
-                                        <span>ftc.gov</span> ↗
-                                    </a>
-                                    <span class="text-white text-xs font-bold block">FTC v. Outlogic / X-Mode (Docket No. C-4802)</span>
-                                </div>
-                                <button onclick="copyText('FTC Docket No. C-4802')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">
-                                    COPY CASE ID
-                                </button>
-                            </div>
-                            <p class="text-zinc-400 text-[11px] font-sans">
-                                Federal ban stopping location tracking gathered through software code embedded inside everyday phone apps.
-                            </p>
-                        </div>
-
-                        <!-- Record 3 -->
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <a href="https://www.ftc.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline flex items-center gap-1">
-                                        <span>ftc.gov</span> ↗
-                                    </a>
-                                    <span class="text-white text-xs font-bold block">FTC v. InMarket Media (Docket No. C-4812)</span>
-                                </div>
-                                <button onclick="copyText('FTC Docket No. C-4812')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">
-                                    COPY CASE ID
-                                </button>
-                            </div>
-                            <p class="text-zinc-400 text-[11px] font-sans">
-                                Prohibited building location profiles without affirmative consent and mandatory full retention caps.
-                            </p>
-                        </div>
-
-                        <!-- Record 4 -->
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <a href="https://www.id.uscourts.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline flex items-center gap-1">
-                                        <span>id.uscourts.gov</span> ↗
-                                    </a>
-                                    <span class="text-white text-xs font-bold block">FTC v. Kochava (Case No. 2:22-cv-00377)</span>
-                                </div>
-                                <button onclick="copyText('Case No. 2:22-cv-00377')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">
-                                    COPY CASE ID
-                                </button>
-                            </div>
-                            <p class="text-zinc-400 text-[11px] font-sans">
-                                Federal lawsuit over selling location data tied to sensitive medical, religious, and personal places.
-                            </p>
-                        </div>
-
-                        <!-- Record 5 -->
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <a href="https://www.oig.dhs.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline flex items-center gap-1">
-                                        <span>oig.dhs.gov</span> ↗
-                                    </a>
-                                    <span class="text-white text-xs font-bold block">DHS Watchdog Audit (Report OIG-23-61)</span>
-                                </div>
-                                <button onclick="copyText('Report No. OIG-23-61')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">
-                                    COPY CASE ID
-                                </button>
-                            </div>
-                            <p class="text-zinc-400 text-[11px] font-sans">
-                                Watchdog audit confirming CBP and ICE queried commercial phone location feeds without prior warrants.
-                            </p>
-                        </div>
-
-                        <!-- Record 6 -->
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <a href="https://www.tigta.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline flex items-center gap-1">
-                                        <span>tigta.gov</span> ↗
-                                    </a>
-                                    <span class="text-white text-xs font-bold block">Treasury Inspector General (TIGTA Venntel Audit)</span>
-                                </div>
-                                <button onclick="copyText('TIGTA Venntel Review')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">
-                                    COPY CASE ID
-                                </button>
-                            </div>
-                            <p class="text-zinc-400 text-[11px] font-sans">
-                                Treasury Inspector General audit confirming IRS-CI subscription to commercial location databases.
-                            </p>
-                        </div>
-
-                        <!-- Record 7 -->
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <a href="https://www.consumerfinance.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline flex items-center gap-1">
-                                        <span>consumerfinance.gov</span> ↗
-                                    </a>
-                                    <span class="text-white text-xs font-bold block">CFPB Circular 2023-01 (FCRA Data Brokers)</span>
-                                </div>
-                                <button onclick="copyText('CFPB Circular 2023-01')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">
-                                    COPY CASE ID
-                                </button>
-                            </div>
-                            <p class="text-zinc-400 text-[11px] font-sans">
-                                Affirmed that vendors selling surveillance data for credit or employment screening are FCRA consumer reporting agencies.
-                            </p>
-                        </div>
-
-                        <!-- Record 8 -->
-                        <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <a href="https://cppa.ca.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline flex items-center gap-1">
-                                        <span>cppa.ca.gov / privacy.ca.gov</span> ↗
-                                    </a>
-                                    <span class="text-white text-xs font-bold block">California Deletion Portal (CPPA DROP)</span>
-                                </div>
-                                <button onclick="copyText('California DROP Portal')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">
-                                    COPY CASE ID
-                                </button>
-                            </div>
-                            <p class="text-zinc-400 text-[11px] font-sans">
-                                State privacy agency mandate establishing a centralized, free deletion mechanism for registered data brokers.
-                            </p>
-                        </div>
+                        <p class="text-zinc-400 text-[11px] font-sans">Banned broker from retaining consumer data pulled out of split-second RTB ad auctions.</p>
                     </div>
-                </div>
 
-                <!-- SEQUENTIAL FOOTER BUTTON FOR TAB 03 -->
-                <div class="pt-4 flex justify-end">
-                    <button onclick="scrollToActionKit()" class="px-6 py-3.5 bg-amberWarning hover:bg-amber-400 text-black font-mono font-extrabold text-xs uppercase rounded shadow-xl flex items-center gap-2 transition-all cursor-pointer">
-                        <span>TAKE ACTION: GENERATE YOUR RECEIPT & LETTER BELOW ↓</span>
-                    </button>
+                    <div class="p-3.5 bg-cardSurface border border-zinc-800 rounded space-y-1.5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <a href="https://www.ftc.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline">ftc.gov ↗</a>
+                                <span class="text-white font-bold block">FTC v. Outlogic / X-Mode (Docket No. C-4802)</span>
+                            </div>
+                            <button type="button" onclick="copyText('FTC Docket No. C-4802')" class="px-2 py-1 bg-zinc-800 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">COPY ID</button>
+                        </div>
+                        <p class="text-zinc-400 text-[11px] font-sans">Federal ban stopping location tracking gathered through SDKs inside everyday phone apps.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-cardSurface border border-zinc-800 rounded space-y-1.5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <a href="https://www.id.uscourts.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline">id.uscourts.gov ↗</a>
+                                <span class="text-white font-bold block">FTC v. Kochava (Case No. 2:22-cv-00377)</span>
+                            </div>
+                            <button type="button" onclick="copyText('Case No. 2:22-cv-00377')" class="px-2 py-1 bg-zinc-800 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">COPY ID</button>
+                        </div>
+                        <p class="text-zinc-400 text-[11px] font-sans">Federal lawsuit over selling location data tied to sensitive personal locations.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-cardSurface border border-zinc-800 rounded space-y-1.5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <a href="https://www.oig.dhs.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline">oig.dhs.gov ↗</a>
+                                <span class="text-white font-bold block">DHS Watchdog Audit (Report OIG-23-61)</span>
+                            </div>
+                            <button type="button" onclick="copyText('Report No. OIG-23-61')" class="px-2 py-1 bg-zinc-800 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">COPY ID</button>
+                        </div>
+                        <p class="text-zinc-400 text-[11px] font-sans">Audit confirming CBP and ICE queried commercial phone location feeds without warrants.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-cardSurface border border-zinc-800 rounded space-y-1.5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <a href="https://www.consumerfinance.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline">consumerfinance.gov ↗</a>
+                                <span class="text-white font-bold block">CFPB Circular 2023-01 (FCRA Brokers)</span>
+                            </div>
+                            <button type="button" onclick="copyText('CFPB Circular 2023-01')" class="px-2 py-1 bg-zinc-800 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">COPY ID</button>
+                        </div>
+                        <p class="text-zinc-400 text-[11px] font-sans">Affirmed that vendors selling background/credit surveillance profiles fall under FCRA rules.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-cardSurface border border-zinc-800 rounded space-y-1.5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <a href="https://cppa.ca.gov" target="_blank" rel="noopener noreferrer" class="text-emeraldSuccess font-bold hover:underline">privacy.ca.gov ↗</a>
+                                <span class="text-white font-bold block">California Deletion Portal (CPPA DROP)</span>
+                            </div>
+                            <button type="button" onclick="copyText('California DROP Portal')" class="px-2 py-1 bg-zinc-800 text-zinc-200 rounded text-[10px] font-bold cursor-pointer">COPY ID</button>
+                        </div>
+                        <p class="text-zinc-400 text-[11px] font-sans">Centralized, free deletion mechanism for registered commercial data brokers.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- THREE COMMON-SENSE DEMANDS & ZERO-DATA ACTION KIT -->
-        <section id="actionKitSection" class="zine-card bg-cardSurface p-6 rounded-lg space-y-6">
-            <div class="border-b border-zinc-800 pb-4">
-                <span class="text-xs font-mono text-amberWarning font-bold uppercase tracking-widest">[ SYSTEMIC REFORM ]</span>
-                <h2 class="text-xl font-bold font-mono text-white mt-1">THE THREE COMMON-SENSE DEMANDS & ACTION KIT</h2>
-                <p class="text-sm text-zinc-400">
-                    Select your demands and generate an official citizen notice to your elected representatives or data brokers.
-                </p>
+        <!-- ACTION KIT & LETTER BUILDER -->
+        <section id="actionKitSection" class="zine-card bg-cardSurface p-5 rounded-lg space-y-4">
+            <div class="border-b border-zinc-800 pb-3">
+                <span class="text-xs font-mono text-amberWarning font-bold uppercase">[ TAKE ACTION ]</span>
+                <h2 class="text-lg font-bold font-mono text-white mt-0.5">THREE COMMON-SENSE DEMANDS & LETTER BUILDER</h2>
             </div>
 
-            <!-- Interactive Demands Selection -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
-                <label class="p-4 bg-darkBg border border-zinc-800 rounded flex items-start gap-3 cursor-pointer hover:border-amberWarning transition-all">
-                    <input type="checkbox" id="demand01" checked onchange="updateGeneratedLetter()" class="mt-1 accent-amberWarning cursor-pointer">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-xs">
+                <label class="p-3 bg-darkBg border border-zinc-800 rounded flex items-start gap-2.5 cursor-pointer hover:border-amberWarning">
+                    <input type="checkbox" id="demand01" checked onchange="updateGeneratedLetter()" class="mt-0.5 accent-amberWarning">
                     <div>
-                        <span class="font-bold text-amberWarning block">DEMAND 01</span>
-                        <span class="text-white font-bold">Close the Warrant Loophole</span>
-                        <p class="text-zinc-400 text-[11px] font-sans mt-1">Prohibit law enforcement from purchasing commercial location databases without a judicial warrant.</p>
+                        <span class="font-bold text-amberWarning block">01 // Close Warrant Loophole</span>
+                        <p class="text-zinc-400 text-[11px] font-sans mt-0.5">Require a judge's warrant before agencies buy phone location data.</p>
                     </div>
                 </label>
-
-                <label class="p-4 bg-darkBg border border-zinc-800 rounded flex items-start gap-3 cursor-pointer hover:border-amberWarning transition-all">
-                    <input type="checkbox" id="demand02" checked onchange="updateGeneratedLetter()" class="mt-1 accent-amberWarning cursor-pointer">
+                <label class="p-3 bg-darkBg border border-zinc-800 rounded flex items-start gap-2.5 cursor-pointer hover:border-amberWarning">
+                    <input type="checkbox" id="demand02" checked onchange="updateGeneratedLetter()" class="mt-0.5 accent-amberWarning">
                     <div>
-                        <span class="font-bold text-amberWarning block">DEMAND 02</span>
-                        <span class="text-white font-bold">Raw Score Transparency</span>
-                        <p class="text-zinc-400 text-[11px] font-sans mt-1">Require brokers to grant citizens direct access to their commercial shadow profiles & risk scores.</p>
+                        <span class="font-bold text-amberWarning block">02 // Show Our Shadow Scores</span>
+                        <p class="text-zinc-400 text-[11px] font-sans mt-0.5">Let people view and delete the hidden profiles data brokers keep on them.</p>
                     </div>
                 </label>
-
-                <label class="p-4 bg-darkBg border border-zinc-800 rounded flex items-start gap-3 cursor-pointer hover:border-amberWarning transition-all">
-                    <input type="checkbox" id="demand03" checked onchange="updateGeneratedLetter()" class="mt-1 accent-amberWarning cursor-pointer">
+                <label class="p-3 bg-darkBg border border-zinc-800 rounded flex items-start gap-2.5 cursor-pointer hover:border-amberWarning">
+                    <input type="checkbox" id="demand03" checked onchange="updateGeneratedLetter()" class="mt-0.5 accent-amberWarning">
                     <div>
-                        <span class="font-bold text-amberWarning block">DEMAND 03</span>
-                        <span class="text-white font-bold">Open the Black Box</span>
-                        <p class="text-zinc-400 text-[11px] font-sans mt-1">Mandate public real-time bidding auction transparency and independent algorithm audits.</p>
+                        <span class="font-bold text-amberWarning block">03 // Open the Ad Black Box</span>
+                        <p class="text-zinc-400 text-[11px] font-sans mt-0.5">Require plain-English disclosure of who buys real-time ad auction data.</p>
                     </div>
                 </label>
             </div>
 
-            <!-- Client-Side Letter Template Builder -->
-            <div class="bg-darkBg border border-zinc-800 p-5 rounded-lg space-y-4">
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-zinc-800 pb-3">
+            <div class="bg-darkBg border border-zinc-800 p-4 rounded-lg space-y-3">
+                <div class="flex flex-wrap items-center justify-between gap-2">
                     <div class="flex gap-2">
-                        <button id="btnLetterTypeOfficial" onclick="setLetterType('official')" class="px-3 py-1 bg-amberWarning text-black font-mono text-xs font-bold rounded cursor-pointer">
+                        <button type="button" id="btnLetterTypeOfficial" onclick="setLetterType('official')" class="px-2.5 py-1 bg-amberWarning text-black font-mono text-xs font-bold rounded cursor-pointer">
                             LETTER TO ELECTED OFFICIAL
                         </button>
-                        <button id="btnLetterTypeBroker" onclick="setLetterType('broker')" class="px-3 py-1 bg-zinc-800 text-zinc-400 font-mono text-xs font-bold rounded hover:text-white cursor-pointer">
-                            DATA BROKER SCORE DEMAND (CCPA)
+                        <button type="button" id="btnLetterTypeBroker" onclick="setLetterType('broker')" class="px-2.5 py-1 bg-zinc-800 text-zinc-400 font-mono text-xs font-bold rounded hover:text-white cursor-pointer">
+                            DATA BROKER DELETION REQUEST
                         </button>
                     </div>
-                    <button onclick="copyGeneratedLetter()" class="px-3 py-1 bg-cardSurface hover:bg-zinc-800 border border-zinc-700 text-white font-mono text-xs rounded transition-all flex items-center gap-1 cursor-pointer">
-                        <svg class="w-3.5 h-3.5 text-amberWarning" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                        <span>COPY LETTER TEXT</span>
+                    <button type="button" onclick="copyGeneratedLetter()" class="px-3 py-1 bg-cardSurface hover:bg-zinc-800 border border-zinc-700 text-white font-mono text-xs rounded cursor-pointer">
+                        COPY LETTER TEXT
                     </button>
                 </div>
 
-                <!-- Input Fields for Customizing Letter -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
-                    <div>
-                        <label class="text-zinc-400 block mb-1">Your Name / Identifier:</label>
-                        <input type="text" id="letterName" value="Concerned Citizen" oninput="updateGeneratedLetter()" class="w-full bg-cardSurface border border-zinc-800 px-3 py-1.5 rounded text-white focus:border-amberWarning outline-none">
-                    </div>
-                    <div>
-                        <label class="text-zinc-400 block mb-1">City / State:</label>
-                        <input type="text" id="letterLocation" value="Saint Paul, MN" oninput="updateGeneratedLetter()" class="w-full bg-cardSurface border border-zinc-800 px-3 py-1.5 rounded text-white focus:border-amberWarning outline-none">
-                    </div>
+                    <input type="text" id="letterName" value="Concerned Citizen" oninput="updateGeneratedLetter()" placeholder="Your Name" class="w-full bg-cardSurface border border-zinc-800 px-3 py-1.5 rounded text-white focus:border-amberWarning outline-none">
+                    <input type="text" id="letterLocation" value="Saint Paul, MN" oninput="updateGeneratedLetter()" placeholder="City, State" class="w-full bg-cardSurface border border-zinc-800 px-3 py-1.5 rounded text-white focus:border-amberWarning outline-none">
                 </div>
 
-                <!-- Generated Letter Preview Area -->
-                <textarea id="letterPreviewText" readonly class="w-full h-48 bg-[#050507] border border-zinc-900 p-4 rounded text-xs font-mono text-zinc-300 leading-relaxed outline-none focus:border-zinc-800 resize-none"></textarea>
+                <textarea id="letterPreviewText" readonly class="w-full h-32 bg-[#050507] border border-zinc-900 p-3 rounded text-xs font-mono text-zinc-300 leading-relaxed outline-none resize-none"></textarea>
             </div>
         </section>
 
-        <!-- 3-STEP PHONE & BROWSER DEFENSE CHECKLIST -->
-        <section class="zine-card bg-cardSurface p-6 rounded-lg space-y-4">
-            <div class="border-b border-zinc-800 pb-3">
-                <span class="text-xs font-mono text-emeraldSuccess font-bold uppercase tracking-widest">[ HARDENING PROTOCOL ]</span>
-                <h2 class="text-xl font-bold font-mono text-white mt-1">3-STEP PHONE & BROWSER DEFENSE CHECKLIST</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
-                <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                    <span class="text-amberWarning font-bold">STEP 01</span>
-                    <h3 class="font-bold text-white text-sm">Reset & Delete Phone Ad ID</h3>
-                    <p class="text-zinc-400 text-[11px] font-sans leading-relaxed">
-                        iOS: Settings &gt; Privacy &gt; Tracking &gt; Disable. Android: Settings &gt; Privacy &gt; Ads &gt; Delete Advertising ID. Breaks primary device cross-app linking.
-                    </p>
-                </div>
-                <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                    <span class="text-amberWarning font-bold">STEP 02</span>
-                    <h3 class="font-bold text-white text-sm">Browser Shield Hardening</h3>
-                    <p class="text-zinc-400 text-[11px] font-sans leading-relaxed">
-                        Install uBlock Origin, enable Global Privacy Control (GPC), use DNS-over-HTTPS (NextDNS/Quad9), and block third-party cookies by default.
-                    </p>
-                </div>
-                <div class="p-4 bg-darkBg border border-zinc-800 rounded space-y-2">
-                    <span class="text-amberWarning font-bold">STEP 03</span>
-                    <h3 class="font-bold text-white text-sm">Mass Deletion Portals</h3>
-                    <p class="text-zinc-400 text-[11px] font-sans leading-relaxed">
-                        Register with California's CPPA DROP portal (privacy.ca.gov), utilize NAI & DAA consumer opt-out portals, and submit annual CCPA removal requests.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- HIGH-PROMINENCE "TAKE YOUR RECEIPT WITH YOU" CANVAS SECTION -->
-        <section class="zine-card zine-card-crimson bg-cardSurface p-6 rounded-lg space-y-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
+        <!-- COMPACT PNG RECEIPT GENERATOR -->
+        <section class="zine-card zine-card-crimson bg-cardSurface p-5 rounded-lg space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-zinc-800 pb-3">
                 <div>
-                    <span class="text-xs font-mono text-crimsonAccent font-bold uppercase tracking-widest">[ PUBLIC PROOF ASSET ]</span>
-                    <h2 class="text-xl font-bold font-mono text-white mt-1">TAKE YOUR RECEIPT WITH YOU</h2>
-                    <p class="text-sm text-zinc-400">
-                        Export a 100% private, 800×1050 redacted image receipt of your browser's clues to share on social media or send to representatives.
+                    <span class="text-xs font-mono text-crimsonAccent font-bold uppercase">[ SHAREABLE PROOF ]</span>
+                    <h2 class="text-lg font-bold font-mono text-white mt-0.5">TAKE YOUR RECEIPT WITH YOU</h2>
+                    <p class="text-xs text-zinc-400">
+                        Export a 100% private PNG image of your browser's clues to share online.
                     </p>
                 </div>
 
-                <!-- Custom Stamp Selector -->
-                <div class="flex items-center gap-2 font-mono text-xs">
-                    <span class="text-zinc-400 text-[11px]">STAMP STYLE:</span>
-                    <button onclick="setReceiptStamp('[REDACTED]')" id="stampBtnRedacted" class="px-2.5 py-1.5 bg-crimsonAccent text-white rounded font-bold cursor-pointer">[REDACTED]</button>
-                    <button onclick="setReceiptStamp('[CONFIDENTIAL]')" id="stampBtnConfidential" class="px-2.5 py-1.5 bg-zinc-800 text-zinc-400 hover:text-white rounded font-bold cursor-pointer">[CONFIDENTIAL]</button>
-                    <button onclick="setReceiptStamp('[WARRANT LOOPHOLE EXPOSED]')" id="stampBtnWarrant" class="px-2.5 py-1.5 bg-zinc-800 text-zinc-400 hover:text-white rounded font-bold cursor-pointer">[LOOPHOLE]</button>
+                <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                    <button type="button" onclick="setReceiptStamp('[REDACTED]')" id="stampBtnRedacted" class="px-2.5 py-1.5 bg-crimsonAccent text-white rounded font-bold cursor-pointer">[REDACTED]</button>
+                    <button type="button" onclick="setReceiptStamp('[CONFIDENTIAL]')" id="stampBtnConfidential" class="px-2.5 py-1.5 bg-zinc-800 text-zinc-400 hover:text-white rounded font-bold cursor-pointer">[CONFIDENTIAL]</button>
+                    <button type="button" onclick="downloadReceiptPNG()" class="px-4 py-2 bg-crimsonAccent hover:bg-red-600 text-white font-mono font-extrabold text-xs uppercase rounded shadow-lg cursor-pointer">
+                        DOWNLOAD PNG RECEIPT
+                    </button>
                 </div>
-
-                <button onclick="downloadReceiptPNG()" class="px-6 py-3.5 bg-crimsonAccent hover:bg-red-600 text-white font-mono font-extrabold text-xs uppercase rounded transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    <span>DOWNLOAD PNG RECEIPT (800x1050)</span>
-                </button>
             </div>
 
-            <!-- Canvas Preview Display -->
-            <div class="flex justify-center bg-darkBg p-4 rounded-lg border border-zinc-800 overflow-x-auto">
-                <canvas id="receiptCanvas" width="800" height="1050" class="max-w-full h-auto border border-zinc-700 rounded shadow-2xl"></canvas>
+            <div class="flex justify-center bg-darkBg p-3 rounded-lg border border-zinc-800">
+                <canvas id="receiptCanvas" width="800" height="1050" class="max-h-[460px] w-auto border border-zinc-700 rounded shadow-2xl"></canvas>
             </div>
         </section>
 
-        <!-- OUR INDEPENDENCE PROMISE (FOOTER OATH BOX) -->
-        <div class="zine-card bg-cardSurface p-6 rounded-lg border-t-2 border-t-emeraldSuccess space-y-3">
-            <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 bg-emeraldSuccess/20 text-emeraldSuccess border border-emeraldSuccess/40 font-mono text-xs font-bold rounded">
-                    OUR INDEPENDENCE PROMISE
-                </span>
-                <span class="text-xs font-mono text-zinc-400">100% NON-COMMERCIAL AUDIT</span>
-            </div>
-            <p class="text-xs md:text-sm text-zinc-300 font-sans leading-relaxed">
-                No cookies. No server-side tracking logs. No paywalls. No product sales. No sponsored influence. This project is completely free for you, runs 100% locally on your own device, and exists purely to bring total daylight to hidden data broker practices.
+        <!-- INDEPENDENCE PROMISE -->
+        <div class="zine-card bg-cardSurface p-4 rounded-lg border-t-2 border-t-emeraldSuccess flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <span class="px-2 py-0.5 bg-emeraldSuccess/20 text-emeraldSuccess border border-emeraldSuccess/40 font-mono text-xs font-bold rounded shrink-0 self-start">
+                OUR INDEPENDENCE PROMISE
+            </span>
+            <p class="text-xs text-zinc-300 font-sans">
+                No cookies. No server-side tracking logs. No paywalls. Runs 100% locally on your device to bring daylight to data broker practices.
             </p>
         </div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="border-t border-cardBorder bg-cardSurface py-6 px-4 mt-12 text-center text-xs font-mono text-zinc-500 space-y-2">
+    <footer class="border-t border-cardBorder bg-cardSurface py-4 px-4 mt-8 text-center text-xs font-mono text-zinc-500">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
             <span>WHAT YOUR BROWSER SAYS ABOUT YOU // PUBLIC FORENSIC EXHIBIT</span>
-            <span>VERIFIED ZERO TRACKERS // 100% LOCAL CANVAS EXECUTION</span>
+            <span>100% LOCAL EXECUTION // OPEN SOURCE (MIT)</span>
         </div>
     </footer>
 
     <!-- JAVASCRIPT ENGINE -->
     <script>
-        // State variables
-        let currentAuctionMode = 'local'; // 'local' or 'live'
-        let jsonViewMode = 'raw'; // 'raw' or 'decoder'
-        let letterType = 'official'; // 'official' or 'broker'
+        let currentAuctionMode = 'local';
+        let jsonViewMode = 'raw';
+        let letterType = 'official';
         let currentStamp = '[REDACTED]';
         let livePayoutCents = 0.0024;
+        let auctionTimers = [];
 
-        // Local browser forensic data store
         let forensicData = {
-            screen: 'Unknown',
-            cpu: 'Unknown',
-            gpu: 'Unknown',
-            timezone: 'Unknown',
-            userAgent: 'Unknown',
+            screen: 'Detecting...',
+            cpu: 'Detecting...',
+            gpu: 'Detecting...',
+            timezone: 'Detecting...',
+            userAgent: navigator.userAgent || 'Unknown',
             battery: 'Shielded / API Unsupported',
-            dnt: 'Disabled',
-            estimatedCpm: '2.40'
+            dnt: 'Off / Unset',
+            estimatedCpm: '2.40',
+            coresNum: 4,
+            dprNum: 1,
+            isTier1Region: true,
+            hasPrivacyProtection: false
         };
 
-        // Window OnLoad Initializer
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             detectBrowserForensics();
             runAuctionSim();
             updateGeneratedLetter();
             renderReceiptCanvas();
             updateAuditDrawerStats();
-        };
+        });
 
-        // Toggle Audit Drawer View
         function toggleAuditDrawer() {
             const drawer = document.getElementById('auditDrawer');
             drawer.classList.toggle('hidden');
@@ -1684,198 +778,319 @@
 
         function updateAuditDrawerStats() {
             const entries = performance.getEntriesByType('resource').length;
-            const cookies = document.cookie ? document.cookie.split(';').length : 0;
-            const localKeys = localStorage.length;
-            const sessionKeys = sessionStorage.length;
-
+            const cookies = document.cookie ? document.cookie.split(';').filter(Boolean).length : 0;
             document.getElementById('auditPings').innerText = entries;
             document.getElementById('auditCookies').innerText = cookies;
-            document.getElementById('auditLocal').innerText = localKeys;
-            document.getElementById('auditSession').innerText = sessionKeys;
+            document.getElementById('auditLocal').innerText = localStorage.length;
+            document.getElementById('auditSession').innerText = sessionStorage.length;
         }
 
-        // Detect Client-side Forensics
         function detectBrowserForensics() {
-            // 1. Screen & Pixel Density
-            const width = window.screen.width;
-            const height = window.screen.height;
+            const width = window.screen.width || 1280;
+            const height = window.screen.height || 720;
             const dpr = window.devicePixelRatio || 1;
             const colorDepth = window.screen.colorDepth || 24;
-            forensicData.screen = `${width}x${height} @${dpr}x (${colorDepth}-bit)`;
+            forensicData.dprNum = dpr;
+            forensicData.screen = `${width}×${height} (${dpr}x sharpness, ${colorDepth}-bit)`;
             document.getElementById('checkScreenVal').innerText = forensicData.screen;
             document.getElementById('decScreenVal').innerText = forensicData.screen;
 
-            // 2. CPU & Memory
-            const cores = navigator.hardwareConcurrency || 'N/A';
-            const ram = navigator.deviceMemory ? `~${navigator.deviceMemory}GB` : 'N/A';
+            const cores = navigator.hardwareConcurrency || 4;
+            const ram = navigator.deviceMemory ? `~${navigator.deviceMemory}GB` : 'Standard';
+            forensicData.coresNum = cores;
             forensicData.cpu = `${cores} Cores / ${ram} RAM`;
             document.getElementById('checkCpuVal').innerText = forensicData.cpu;
-            document.getElementById('decCpuVal').innerText = forensicData.cpu;
 
-            // 3. User Agent
-            forensicData.userAgent = navigator.userAgent;
-
-            // 4. GPU WebGL Renderer & Canvas Hash
             try {
                 const canvas = document.createElement('canvas');
                 const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-                let gpuVendor = 'Generic WebGL Engine';
+                let gpuVendor = 'Standard WebGL Graphics';
                 if (gl) {
                     const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
                     if (debugInfo) {
-                        gpuVendor = gl.getParameter(debugInfo.UNMASKED_RENDERER_STRING) || gpuVendor;
+                        gpuVendor = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || gpuVendor;
                     }
                 }
                 forensicData.gpu = gpuVendor;
-            } catch(e) {
-                forensicData.gpu = 'WebGL Shielded / Restricted';
+            } catch (e) {
+                forensicData.gpu = 'Graphics Info Shielded';
             }
             document.getElementById('checkGpuVal').innerText = forensicData.gpu;
             document.getElementById('decGpuVal').innerText = forensicData.gpu;
 
-            // 5. Timezone & Region
             try {
                 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
                 const now = new Date();
                 const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 forensicData.timezone = `${tz} (${timeStr})`;
-            } catch(e) {
-                forensicData.timezone = 'UTC / Unknown Offset';
+                forensicData.isTier1Region = /^(America|Europe|Australia|Pacific\/Auckland)/.test(tz);
+            } catch (e) {
+                forensicData.timezone = 'UTC / Hidden';
             }
             document.getElementById('checkTimeval').innerText = forensicData.timezone;
             document.getElementById('decTzVal').innerText = forensicData.timezone;
 
-            // 6. Battery Level & Charging State (Robust Fallback)
             if ('getBattery' in navigator && typeof navigator.getBattery === 'function') {
                 navigator.getBattery().then(function(battery) {
                     const level = Math.round(battery.level * 100);
                     const charging = battery.charging ? ' (Plugged In)' : ' (On Battery)';
                     forensicData.battery = `${level}%${charging}`;
                     document.getElementById('checkBatteryVal').innerText = forensicData.battery;
-                    document.getElementById('decBatteryVal').innerText = forensicData.battery;
                     renderReceiptCanvas();
                 }).catch(function() {
-                    forensicData.battery = 'Shielded / API Restricted';
+                    forensicData.battery = 'Shielded by Browser';
                     document.getElementById('checkBatteryVal').innerText = forensicData.battery;
-                    document.getElementById('decBatteryVal').innerText = forensicData.battery;
                 });
             } else {
-                forensicData.battery = 'Shielded / API Unsupported';
+                forensicData.battery = 'Shielded by Browser';
                 document.getElementById('checkBatteryVal').innerText = forensicData.battery;
-                document.getElementById('decBatteryVal').innerText = forensicData.battery;
             }
 
-            // 7. Privacy Signal (GPC / DNT)
             const dnt = navigator.doNotTrack === '1' || window.doNotTrack === '1';
             const gpc = navigator.globalPrivacyControl === true;
+            const isBrave = /Brave/i.test(navigator.userAgent);
+            forensicData.hasPrivacyProtection = dnt || gpc || isBrave;
+
             if (gpc) {
-                forensicData.dnt = 'GPC Signal Active (Opt-Out)';
+                forensicData.dnt = 'Global Privacy Control Active';
             } else if (dnt) {
-                forensicData.dnt = 'DNT: 1 (Enabled)';
+                forensicData.dnt = 'Do-Not-Track Enabled';
             } else {
-                forensicData.dnt = 'DNT: Off / Unset';
+                forensicData.dnt = 'Off / Open Signature';
             }
             document.getElementById('checkDntVal').innerText = forensicData.dnt;
             document.getElementById('decDntVal').innerText = forensicData.dnt;
-
-            // Compute Estimated Valuation
-            let baseCpm = 2.40;
-            if (cores >= 8) baseCpm += 0.80;
-            if (dpr > 1) baseCpm += 0.40;
-            if (forensicData.gpu.includes('Apple') || forensicData.gpu.includes('NVIDIA') || forensicData.gpu.includes('Radeon')) baseCpm += 1.10;
-            forensicData.estimatedCpm = baseCpm.toFixed(2);
-            document.getElementById('auctionCPM').innerText = `$${forensicData.estimatedCpm} / CPM ($${(baseCpm/1000).toFixed(4)}/view)`;
         }
 
-        // Toggle Auction Mode (Single Button Handler)
         function toggleAuctionMode() {
-            setAuctionMode(currentAuctionMode === 'local' ? 'live' : 'local');
-        }
-
-        function setAuctionMode(mode) {
-            currentAuctionMode = mode;
+            currentAuctionMode = currentAuctionMode === 'local' ? 'live' : 'local';
             const btnToggle = document.getElementById('btnAuctionToggle');
             const mainLabel = document.getElementById('toggleMainLabel');
             const subLabel = document.getElementById('toggleSubLabel');
             const statusDot = document.getElementById('toggleStatusDot');
-            const modeLabel = document.getElementById('auctionModeLabel');
             const topTrustText = document.getElementById('trustBannerText');
             const topTrustDot = document.getElementById('trustStatusDot');
             const payoutRow = document.getElementById('payoutTickerRow');
-            const overlay = document.getElementById('lockedBidderOverlay');
 
-            if (mode === 'local') {
-                btnToggle.className = "relative px-5 py-3 rounded-lg font-bold border transition-all duration-300 flex items-center gap-3 shadow-lg bg-amberWarning/15 text-amberWarning border-amberWarning pulse-glow-amber cursor-pointer hover:bg-amberWarning/25";
+            if (currentAuctionMode === 'local') {
+                btnToggle.className = "px-4 py-2.5 rounded-lg font-bold border transition-all duration-300 flex items-center gap-2.5 shadow-lg bg-amberWarning/15 text-amberWarning border-amberWarning pulse-glow-amber cursor-pointer hover:bg-amberWarning/25";
                 mainLabel.innerText = "[ OPT-IN: SEE YOUR REAL-TIME BIDS — FREE FOR YOU // PAID BY THEM ]";
                 mainLabel.className = "text-xs uppercase tracking-wide font-extrabold text-amberWarning";
                 subLabel.innerText = "Click to toggle live RTB buyer pings (Default: 100% Local Mode)";
                 statusDot.className = "h-2.5 w-2.5 rounded-full bg-amberWarning animate-ping";
-                
-                modeLabel.innerText = "LOCAL SIMULATION";
-                modeLabel.className = "font-bold text-emeraldSuccess";
-                
+
                 topTrustText.innerText = "0 Outside Connections | 100% Local Scan | Zero Cookies | Zero Server Logging";
                 topTrustText.className = "font-bold text-amberWarning tracking-wide";
                 topTrustDot.className = "h-2 w-2 rounded-full bg-emeraldSuccess animate-pulse";
                 payoutRow.classList.add('hidden');
-                overlay.classList.remove('hidden');
-
-                showToast("Returned to 100% Local Simulation (Private)");
+                showToast("Returned to 100% Local Mode");
             } else {
-                btnToggle.className = "relative px-5 py-3 rounded-lg font-bold border transition-all duration-300 flex items-center gap-3 shadow-lg bg-crimsonAccent/20 text-white border-crimsonAccent pulse-glow-crimson cursor-pointer";
+                btnToggle.className = "px-4 py-2.5 rounded-lg font-bold border transition-all duration-300 flex items-center gap-2.5 shadow-lg bg-crimsonAccent/20 text-white border-crimsonAccent pulse-glow-crimson cursor-pointer";
                 mainLabel.innerText = "[ LIVE RTB AUCTION ACTIVE — FREE FOR YOU // PAID BY THEM ]";
                 mainLabel.className = "text-xs uppercase tracking-wide font-extrabold text-crimsonAccent";
                 subLabel.innerText = "LIVE BUYERS UNLOCKED (Click to return to 100% Local Mode)";
                 statusDot.className = "h-2.5 w-2.5 rounded-full bg-crimsonAccent animate-ping";
-                
-                modeLabel.innerText = "OPT-IN LIVE BROADCAST";
-                modeLabel.className = "font-bold text-crimsonAccent animate-pulse";
-                
+
                 topTrustText.innerText = "LIVE RTB BROADCAST ACTIVE // 100% FREE FOR YOU, PAID FOR BY THEM";
                 topTrustText.className = "font-bold text-crimsonAccent tracking-wide";
                 topTrustDot.className = "h-2 w-2 rounded-full bg-crimsonAccent animate-ping";
                 payoutRow.classList.remove('hidden');
-                overlay.classList.add('hidden');
 
                 livePayoutCents += 0.0012;
                 document.getElementById('livePayoutTicker').innerText = `$${livePayoutCents.toFixed(4)}`;
-                showToast("Live Network Bidders Unlocked!");
+                showToast("Live Ad Auction View Unlocked!");
             }
             runAuctionSim();
         }
 
-        // Run Auction Simulation & Populate OpenRTB Log
-        function runAuctionSim() {
-            const progressBar = document.getElementById('auctionProgressBar');
-            progressBar.style.width = '0%';
-            setTimeout(() => { progressBar.style.width = '100%'; }, 50);
-
-            const log = document.getElementById('bidstreamLog');
-            log.innerHTML = '';
-
-            const buyers = [
-                { name: 'IndexExchange', price: (parseFloat(forensicData.estimatedCpm) * 0.98).toFixed(2) },
-                { name: 'TheTradeDesk', price: (parseFloat(forensicData.estimatedCpm) * 0.92).toFixed(2) },
-                { name: 'PubMatic', price: (parseFloat(forensicData.estimatedCpm) * 0.85).toFixed(2) },
-                { name: 'Magnite (Rubicon)', price: (parseFloat(forensicData.estimatedCpm) * 0.79).toFixed(2) },
-                { name: 'OpenX', price: (parseFloat(forensicData.estimatedCpm) * 0.71).toFixed(2) },
-                { name: 'Criteo RTB Engine', price: (parseFloat(forensicData.estimatedCpm) * 0.65).toFixed(2) }
+        function calculateDeviceValuation(isPrivacySimulated) {
+            const items = [
+                {
+                    title: "Base Ad Space",
+                    detail: "Minimum starting value just for loading a webpage",
+                    amount: 0.40
+                }
             ];
 
-            const modePrefix = currentAuctionMode === 'live' ? '[LIVE BROADCAST]' : '[SIMULATED]';
+            if (isPrivacySimulated) {
+                items.push(
+                    {
+                        title: "Location & Time Zone Hidden",
+                        detail: "Masked to generic UTC — advertisers cannot tell where you live",
+                        amount: 0.10
+                    },
+                    {
+                        title: "Screen & Hardware Masked",
+                        detail: "Reported as a basic generic device",
+                        amount: 0.10
+                    },
+                    {
+                        title: "Tracking Protection Active",
+                        detail: "Your browser blocked cross-site profiling clues",
+                        amount: -0.20
+                    }
+                );
+            } else {
+                items.push(
+                    {
+                        title: `Time Zone Region`,
+                        detail: forensicData.isTier1Region
+                            ? "High-demand consumer region increases ad competition"
+                            : "Standard regional ad market",
+                        amount: forensicData.isTier1Region ? 1.45 : 0.60
+                    },
+                    {
+                        title: `Screen Sharpness (${forensicData.dprNum}x clarity)`,
+                        detail: forensicData.dprNum >= 2
+                            ? "High-definition display signals a modern phone or laptop"
+                            : "Standard display resolution",
+                        amount: forensicData.dprNum >= 2 ? 1.15 : 0.45
+                    },
+                    {
+                        title: `Device Speed (${forensicData.coresNum} Cores)`,
+                        detail: "Processor & graphics tier used to estimate device value",
+                        amount: forensicData.coresNum >= 8 ? 0.95 : 0.45
+                    },
+                    {
+                        title: forensicData.hasPrivacyProtection ? "Privacy Signal Active" : "Open Browser Signature",
+                        detail: forensicData.hasPrivacyProtection
+                            ? "Privacy flags lower how much advertisers bid on you"
+                            : "No tracking blocker detected — easy for ad networks to recognize",
+                        amount: forensicData.hasPrivacyProtection ? -0.65 : 0.65
+                    }
+                );
+            }
 
-            log.innerHTML += `<div class="text-zinc-500">${modePrefix} 0ms: OpenRTB 2.6 Bid Request dispatched across 14 ad exchange partners...</div>`;
-            log.innerHTML += `<div class="text-amberWarning">${modePrefix} +42ms: Payload parsed. Screen: ${forensicData.screen}, CPU: ${forensicData.cpu}.</div>`;
-            log.innerHTML += `<div class="text-zinc-400">${modePrefix} +110ms: Buyer bids received. High bid: $${buyers[0].price} CPM (${buyers[0].name}).</div>`;
-            log.innerHTML += `<div class="text-emeraldSuccess font-bold">${modePrefix} +238ms: Auction cleared! Winner: ${buyers[0].name} @ $${buyers[0].price} CPM.</div>`;
-
-            document.getElementById('winningBidder').innerText = buyers[0].name;
-            document.getElementById('winningPrice').innerText = `$${buyers[0].price} CPM`;
-
-            updateOpenRTBJsonDisplay();
+            let total = items.reduce((sum, item) => sum + item.amount, 0);
+            total = Math.max(0.30, Number(total.toFixed(2)));
+            return { total, items };
         }
 
-        // Set OpenRTB JSON View Mode (Raw vs Decoder)
+        function runAuctionSim() {
+            auctionTimers.forEach(clearTimeout);
+            auctionTimers = [];
+
+            const isPrivacySimulated = document.getElementById('privacyHardeningToggle').checked;
+            const baseline = calculateDeviceValuation(false).total;
+            const current = calculateDeviceValuation(isPrivacySimulated);
+            const winningPrice = current.total;
+
+            forensicData.estimatedCpm = winningPrice.toFixed(2);
+
+            // Render Plain-English Receipt Ledger
+            const ledgerEl = document.getElementById('receiptLedgerContainer');
+            ledgerEl.innerHTML = current.items.map(item => {
+                const isPos = item.amount >= 0;
+                const priceText = isPos ? `+$${item.amount.toFixed(2)}` : `-$${Math.abs(item.amount).toFixed(2)}`;
+                const priceColor = isPos ? 'text-amberWarning' : 'text-emeraldSuccess';
+                return `
+                    <div class="flex items-center justify-between gap-3 bg-cardSurface border border-zinc-800/90 rounded px-3 py-2">
+                        <div>
+                            <div class="text-xs font-bold text-white">${item.title}</div>
+                            <div class="text-[11px] text-zinc-400 leading-tight">${item.detail}</div>
+                        </div>
+                        <div class="font-mono text-xs font-bold ${priceColor} shrink-0">${priceText}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Animate 6 Ad Buyers
+            const heroPriceEl = document.getElementById('winningPriceHero');
+            const heroStatusEl = document.getElementById('heroAuctionStatus');
+            const heroSubtextEl = document.getElementById('heroSubtext');
+            const dropBadgeEl = document.getElementById('privacyDropBadge');
+            const clockEl = document.getElementById('auctionClockBadge');
+            const bidderListEl = document.getElementById('bidderListContainer');
+
+            heroStatusEl.innerText = isPrivacySimulated
+                ? "Winning Bid (Privacy Mode ON)"
+                : (currentAuctionMode === 'live' ? "Live Auction Winning Bid" : "Winning Bid (Your Current Device)");
+            heroPriceEl.className = isPrivacySimulated
+                ? "text-3xl md:text-4xl font-extrabold font-mono text-emeraldSuccess"
+                : "text-3xl md:text-4xl font-extrabold font-mono text-amberWarning";
+            dropBadgeEl.innerHTML = "";
+
+            const bidders = [
+                { name: "PubMatic", role: "Ad Marketplace", ms: 34, bid: Number((winningPrice * 0.64).toFixed(2)), timeout: false },
+                { name: "Index Exchange", role: "Ad Network", ms: 69, bid: Number((winningPrice * 0.79).toFixed(2)), timeout: false },
+                { name: "Criteo", role: "Shopping Ads", ms: 104, bid: Number((winningPrice * 0.90).toFixed(2)), timeout: false },
+                { name: "Magnite", role: "Video & Banner Buyer", ms: 139, bid: winningPrice, timeout: false, winner: true },
+                { name: "The Trade Desk", role: "Brand Ad Buyer", ms: 164, bid: Number((winningPrice * 0.93).toFixed(2)), timeout: false },
+                { name: "OpenX", role: "Real-Time Exchange", ms: 194, bid: 0, timeout: true }
+            ];
+
+            bidderListEl.innerHTML = bidders.map((b, i) => `
+                <div id="bidRow_${i}" class="flex items-center justify-between gap-2 bg-cardSurface border border-zinc-800/90 rounded px-3 py-2 opacity-40 transition-all duration-200">
+                    <div>
+                        <div class="text-xs font-bold text-white">${b.name} <span class="text-[11px] font-normal text-zinc-400">• ${b.role}</span></div>
+                        <div class="text-[10px] font-mono text-zinc-500">Response time: ${b.ms} ms</div>
+                    </div>
+                    <div class="text-right font-mono">
+                        <div id="bidAmt_${i}" class="text-xs font-bold text-zinc-300">Waiting...</div>
+                        <div id="bidStat_${i}" class="text-[10px] uppercase"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            let highBid = 0;
+            bidders.forEach((b, i) => {
+                const t = setTimeout(() => {
+                    clockEl.innerText = `Clock: ${Math.min(b.ms, 180)} ms`;
+                    const row = document.getElementById(`bidRow_${i}`);
+                    const amt = document.getElementById(`bidAmt_${i}`);
+                    const stat = document.getElementById(`bidStat_${i}`);
+                    row.classList.remove('opacity-40');
+
+                    if (b.timeout) {
+                        amt.innerText = "No Bid";
+                        stat.innerText = "Too Slow (Missed 180ms Cutoff)";
+                        stat.className = "text-[10px] uppercase text-crimsonAccent font-bold";
+                    } else {
+                        amt.innerText = `$${b.bid.toFixed(2)}`;
+                        if (b.bid > highBid) {
+                            highBid = b.bid;
+                            heroPriceEl.innerText = `$${highBid.toFixed(2)}`;
+                            stat.innerText = "Highest Bid";
+                            stat.className = "text-[10px] uppercase text-emeraldSuccess font-bold";
+                        } else {
+                            stat.innerText = "Outbid";
+                            stat.className = "text-[10px] uppercase text-zinc-500";
+                        }
+                    }
+                }, i * 240 + 80);
+                auctionTimers.push(t);
+            });
+
+            const doneTimer = setTimeout(() => {
+                clockEl.innerText = "Settled in 176 ms";
+                const centsPerVisit = (winningPrice / 10).toFixed(2);
+                heroSubtextEl.innerText = `Advertisers pay $${winningPrice.toFixed(2)} per 1,000 views (~${centsPerVisit}¢ for this single visit)`;
+
+                bidders.forEach((b, i) => {
+                    const row = document.getElementById(`bidRow_${i}`);
+                    const stat = document.getElementById(`bidStat_${i}`);
+                    if (b.winner) {
+                        row.classList.add('border-emeraldSuccess');
+                        stat.innerText = "WINNER";
+                        stat.className = "text-[10px] uppercase text-emeraldSuccess font-extrabold";
+                    } else if (!b.timeout) {
+                        stat.innerText = "Outbid";
+                        stat.className = "text-[10px] uppercase text-zinc-500";
+                    }
+                });
+
+                if (isPrivacySimulated && baseline > winningPrice) {
+                    const dropPct = Math.round(((baseline - winningPrice) / baseline) * 100);
+                    dropBadgeEl.innerHTML = `<span class="inline-block px-2.5 py-0.5 bg-emeraldSuccess/15 border border-emeraldSuccess/40 text-emeraldSuccess font-mono text-[11px] font-bold rounded">Your ad price dropped ${dropPct}% (Down from $${baseline.toFixed(2)})</span>`;
+                }
+
+                updateOpenRTBJsonDisplay();
+                renderReceiptCanvas();
+            }, bidders.length * 240 + 180);
+
+            auctionTimers.push(doneTimer);
+        }
+
         function setJsonViewMode(mode) {
             jsonViewMode = mode;
             const btnRaw = document.getElementById('btnViewRawJson');
@@ -1884,119 +1099,37 @@
             const decView = document.getElementById('jsonDecoderView');
 
             if (mode === 'raw') {
-
-        // Window OnLoad Initializer
-        window.onload = function() {
-            detectBrowserForensics();
-            updateGeneratedLetter();
-            renderReceiptCanvas();
-            updateAuditDrawerStats();
-        };
-
-        // Toggle Audit Drawer View
-        function toggleAuditDrawer() {
-            const drawer = document.getElementById('auditDrawer');
-            drawer.classList.toggle('hidden');
-            updateAuditDrawerStats();
+                btnRaw.className = "px-2.5 py-1 bg-amberWarning text-black font-mono text-[11px] rounded font-bold transition-all cursor-pointer";
+                btnDec.className = "px-2.5 py-1 bg-zinc-800 text-zinc-400 hover:text-white font-mono text-[11px] rounded font-bold transition-all cursor-pointer";
+                rawView.classList.remove('hidden');
+                decView.classList.add('hidden');
+            } else {
+                btnDec.className = "px-2.5 py-1 bg-amberWarning text-black font-mono text-[11px] rounded font-bold transition-all cursor-pointer";
+                btnRaw.className = "px-2.5 py-1 bg-zinc-800 text-zinc-400 hover:text-white font-mono text-[11px] rounded font-bold transition-all cursor-pointer";
+                decView.classList.remove('hidden');
+                rawView.classList.add('hidden');
+            }
         }
 
-        function updateAuditDrawerStats() {
-            const entries = performance.getEntriesByType('resource').length;
-            const cookies = document.cookie ? document.cookie.split(';').length : 0;
-            const localKeys = localStorage.length;
-            const sessionKeys = sessionStorage.length;
-
-            document.getElementById('auditPings').innerText = entries;
-            document.getElementById('auditCookies').innerText = cookies;
-            document.getElementById('auditLocal').innerText = localKeys;
-            document.getElementById('auditSession').innerText = sessionKeys;
-        }
-
-        // Detect Client-side Forensics
-        function detectBrowserForensics() {
-            // 1. Screen & Pixel Density
-            const width = window.screen.width;
-            const height = window.screen.height;
-            const dpr = window.devicePixelRatio || 1;
-            const colorDepth = window.screen.colorDepth || 24;
-            forensicData.screen = `${width}x${height} @${dpr}x (${colorDepth}-bit)`;
-            document.getElementById('checkScreenVal').innerText = forensicData.screen;
-
-            // 2. CPU & Memory
-            const cores = navigator.hardwareConcurrency || 'N/A';
-            const ram = navigator.deviceMemory ? `~${navigator.deviceMemory}GB` : 'N/A';
-            forensicData.cpu = `${cores} Cores / ${ram} RAM`;
-            document.getElementById('checkCpuVal').innerText = forensicData.cpu;
-
-            // 3. User Agent
-            forensicData.userAgent = navigator.userAgent;
-
-            // 4. GPU WebGL Renderer & Canvas Hash
-            try {
-                const canvas = document.createElement('canvas');
-                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-                let gpuVendor = 'Generic WebGL Engine';
-                if (gl) {
-                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-                    if (debugInfo) {
-                        gpuVendor = gl.getParameter(debugInfo.UNMASKED_RENDERER_STRING) || gpuVendor;
-                    }
+        function updateOpenRTBJsonDisplay() {
+            const display = document.getElementById('jsonInspectorDisplay');
+            const openRtbReq = {
+                id: "rtb_" + Math.floor(Math.random() * 900000 + 100000),
+                imp: [{ id: "1", banner: { w: window.innerWidth, h: 250 }, bidfloor: 0.40 }],
+                device: {
+                    geo: { tz: forensicData.timezone },
+                    screen: forensicData.screen,
+                    gpu: forensicData.gpu,
+                    hardware_concurrency: forensicData.coresNum
+                },
+                ext: {
+                    mode: currentAuctionMode,
+                    winning_cpm: "$" + forensicData.estimatedCpm
                 }
-                forensicData.gpu = gpuVendor;
-            } catch(e) {
-                forensicData.gpu = 'WebGL Shielded / Restricted';
-            }
-            document.getElementById('checkGpuVal').innerText = forensicData.gpu;
-
-            // 5. Timezone & Region
-            try {
-                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                forensicData.timezone = `${tz} (${timeStr})`;
-            } catch(e) {
-                forensicData.timezone = 'UTC / Unknown Offset';
-            }
-            document.getElementById('checkTimeval').innerText = forensicData.timezone;
-
-            // 6. Battery Level & Charging State (Robust Fallback)
-            if ('getBattery' in navigator && typeof navigator.getBattery === 'function') {
-                navigator.getBattery().then(function(battery) {
-                    const level = Math.round(battery.level * 100);
-                    const charging = battery.charging ? ' (Plugged In)' : ' (On Battery)';
-                    forensicData.battery = `${level}%${charging}`;
-                    document.getElementById('checkBatteryVal').innerText = forensicData.battery;
-                    renderReceiptCanvas();
-                }).catch(function() {
-                    forensicData.battery = 'Shielded / API Restricted';
-                    document.getElementById('checkBatteryVal').innerText = forensicData.battery;
-                });
-            } else {
-                forensicData.battery = 'Shielded / API Unsupported';
-                document.getElementById('checkBatteryVal').innerText = forensicData.battery;
-            }
-
-            // 7. Privacy Signal (GPC / DNT)
-            const dnt = navigator.doNotTrack === '1' || window.doNotTrack === '1';
-            const gpc = navigator.globalPrivacyControl === true;
-            if (gpc) {
-                forensicData.dnt = 'GPC Signal Active (Opt-Out)';
-            } else if (dnt) {
-                forensicData.dnt = 'DNT: 1 (Enabled)';
-            } else {
-                forensicData.dnt = 'DNT: Off / Unset';
-            }
-            document.getElementById('checkDntVal').innerText = forensicData.dnt;
-
-            // Compute Estimated Valuation for Receipt Canvas
-            let baseCpm = 2.40;
-            if (cores >= 8) baseCpm += 0.80;
-            if (dpr > 1) baseCpm += 0.40;
-            if (forensicData.gpu.includes('Apple') || forensicData.gpu.includes('NVIDIA') || forensicData.gpu.includes('Radeon')) baseCpm += 1.10;
-            forensicData.estimatedCpm = baseCpm.toFixed(2);
+            };
+            display.innerText = JSON.stringify(openRtbReq, null, 2);
         }
 
-        // Main Tab Switcher Logic
         function switchMainTab(tabId) {
             document.getElementById('contentTab01').classList.add('hidden');
             document.getElementById('contentTab02').classList.add('hidden');
@@ -2006,8 +1139,8 @@
             const btn02 = document.getElementById('navTab02');
             const btn03 = document.getElementById('navTab03');
 
-            const inactiveStyle = "py-3 px-4 rounded text-center font-bold transition-all text-zinc-400 hover:text-white hover:bg-zinc-800 cursor-pointer";
-            const activeStyle = "py-3 px-4 rounded text-center font-bold transition-all bg-amberWarning text-black shadow cursor-pointer";
+            const inactiveStyle = "py-2.5 px-4 rounded text-center font-bold transition-all text-zinc-400 hover:text-white hover:bg-zinc-800 cursor-pointer";
+            const activeStyle = "py-2.5 px-4 rounded text-center font-bold transition-all bg-amberWarning text-black shadow cursor-pointer";
 
             btn01.className = inactiveStyle;
             btn02.className = inactiveStyle;
@@ -2023,25 +1156,20 @@
                 document.getElementById('contentTab03').classList.remove('hidden');
                 btn03.className = activeStyle;
             }
-            window.scrollTo({ top: 120, behavior: 'smooth' });
+            window.scrollTo({ top: 90, behavior: 'smooth' });
         }
 
-        function scrollToActionKit() {
-            document.getElementById('actionKitSection').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Letter Generator Handler
         function setLetterType(type) {
             letterType = type;
             const btnOff = document.getElementById('btnLetterTypeOfficial');
             const btnBrok = document.getElementById('btnLetterTypeBroker');
 
             if (type === 'official') {
-                btnOff.className = "px-3 py-1 bg-amberWarning text-black font-mono text-xs font-bold rounded cursor-pointer";
-                btnBrok.className = "px-3 py-1 bg-zinc-800 text-zinc-400 font-mono text-xs font-bold rounded hover:text-white cursor-pointer";
+                btnOff.className = "px-2.5 py-1 bg-amberWarning text-black font-mono text-xs font-bold rounded cursor-pointer";
+                btnBrok.className = "px-2.5 py-1 bg-zinc-800 text-zinc-400 font-mono text-xs font-bold rounded hover:text-white cursor-pointer";
             } else {
-                btnBrok.className = "px-3 py-1 bg-amberWarning text-black font-mono text-xs font-bold rounded cursor-pointer";
-                btnOff.className = "px-3 py-1 bg-zinc-800 text-zinc-400 font-mono text-xs font-bold rounded hover:text-white cursor-pointer";
+                btnBrok.className = "px-2.5 py-1 bg-amberWarning text-black font-mono text-xs font-bold rounded cursor-pointer";
+                btnOff.className = "px-2.5 py-1 bg-zinc-800 text-zinc-400 font-mono text-xs font-bold rounded hover:text-white cursor-pointer";
             }
             updateGeneratedLetter();
         }
@@ -2049,82 +1177,51 @@
         function updateGeneratedLetter() {
             const name = document.getElementById('letterName').value || 'Concerned Citizen';
             const location = document.getElementById('letterLocation').value || 'Saint Paul, MN';
-            
             const d1 = document.getElementById('demand01').checked;
             const d2 = document.getElementById('demand02').checked;
             const d3 = document.getElementById('demand03').checked;
-
             const textarea = document.getElementById('letterPreviewText');
 
             if (letterType === 'official') {
-                let letter = `DATE: ${new Date().toLocaleDateString()}\n`;
-                letter += `TO: Elected Representatives for ${location}\n`;
-                letter += `FROM: ${name}\n\n`;
-                letter += `SUBJECT: Urgent Action Requested - Closing the Warrant Loophole & Protecting Consumer Privacy\n\n`;
-                letter += `I am writing as a constituent residing in ${location} regarding the commercial data broker ecosystem.\n\n`;
-                letter += `As documented in official federal audits (DHS OIG Report OIG-23-61 & Treasury Inspector General Ref 2020-30-015), government agencies routinely purchase mobile location databases directly from commercial brokers without 4th Amendment warrants.\n\n`;
-                letter += `I respectfully urge you to co-sponsor legislative measures supporting:\n`;
-                if (d1) letter += `[X] DEMAND 01: Closing the Warrant Loophole - Banning warrantless government acquisition of commercial device location databases.\n`;
-                if (d2) letter += `[X] DEMAND 02: Raw Score Transparency - Mandating that data brokers grant citizens full access to their shadow profiles.\n`;
-                if (d3) letter += `[X] DEMAND 03: Open the Black Box - Requiring independent public audits of real-time bidding (RTB) auction payloads.\n`;
-                letter += `\nThank you for your leadership on protecting digital rights for our families.\n\n`;
-                letter += `Sincerely,\n${name}`;
+                let letter = `DATE: ${new Date().toLocaleDateString()}\nTO: Elected Representatives for ${location}\nFROM: ${name}\n\n`;
+                letter += `I am writing as a constituent in ${location} to urge action on commercial data broker surveillance.\n\n`;
+                if (d1) letter += `[X] Close the Warrant Loophole (DHS OIG-23-61)\n`;
+                if (d2) letter += `[X] Require Data Brokers to Disclose & Delete Shadow Profiles\n`;
+                if (d3) letter += `[X] Mandate Real-Time Ad Auction Transparency\n`;
+                letter += `\nSincerely,\n${name}`;
                 textarea.value = letter;
             } else {
-                let letter = `DATE: ${new Date().toLocaleDateString()}\n`;
-                letter += `TO: Data Broker Privacy & Compliance Department\n`;
-                letter += `FROM: ${name} (${location})\n\n`;
-                letter += `SUBJECT: Formal CCPA/CPRA Data File & Commercial Score Access Demand\n\n`;
-                letter += `Pursuant to applicable state privacy statutes (including CCPA/CPRA and California CPPA DROP portal regulations), I hereby request complete disclosure of all personal data, behavioral profiles, and risk scores associated with my device signatures.\n\n`;
-                letter += `Demand Specifications:\n`;
-                letter += `1. Disclosure of all Mobile Advertising IDs (MAIDs), IP logs, and cookie sync records.\n`;
-                letter += `2. Identification of third-party buyers who purchased my real-time bidstream data.\n`;
-                letter += `3. Complete data deletion across all active databases.\n\n`;
-                letter += `Please process this request within the statutory 45-day window.\n\n`;
-                letter += `Submitted by,\n${name}`;
+                let letter = `DATE: ${new Date().toLocaleDateString()}\nTO: Data Broker Privacy Compliance\nFROM: ${name} (${location})\n\n`;
+                letter += `Pursuant to applicable state privacy laws (CCPA/CPRA), I request full disclosure and deletion of all device identifiers, location trails, and commercial profiles associated with my devices.\n\nSincerely,\n${name}`;
                 textarea.value = letter;
             }
             renderReceiptCanvas();
         }
 
-        // Receipt Stamp Selector
         function setReceiptStamp(stampLabel) {
             currentStamp = stampLabel;
-            
             const btnRed = document.getElementById('stampBtnRedacted');
             const btnConf = document.getElementById('stampBtnConfidential');
-            const btnWar = document.getElementById('stampBtnWarrant');
-
             const activeClass = "px-2.5 py-1.5 bg-crimsonAccent text-white rounded font-bold cursor-pointer";
             const inactiveClass = "px-2.5 py-1.5 bg-zinc-800 text-zinc-400 hover:text-white rounded font-bold cursor-pointer";
 
-            btnRed.className = inactiveClass;
-            btnConf.className = inactiveClass;
-            btnWar.className = inactiveClass;
-
-            if (stampLabel === '[REDACTED]') btnRed.className = activeClass;
-            else if (stampLabel === '[CONFIDENTIAL]') btnConf.className = activeClass;
-            else if (stampLabel === '[WARRANT LOOPHOLE EXPOSED]') btnWar.className = activeClass;
-
+            btnRed.className = stampLabel === '[REDACTED]' ? activeClass : inactiveClass;
+            btnConf.className = stampLabel === '[CONFIDENTIAL]' ? activeClass : inactiveClass;
             renderReceiptCanvas();
-            showToast(`Receipt Stamp Set to: ${stampLabel}`);
         }
 
-        // Render Canvas Receipt (800x1050)
         function renderReceiptCanvas() {
             const canvas = document.getElementById('receiptCanvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
 
-            // Background
             ctx.fillStyle = '#08080a';
             ctx.fillRect(0, 0, 800, 1050);
 
-            // Outer Border
             ctx.strokeStyle = '#202028';
             ctx.lineWidth = 4;
             ctx.strokeRect(20, 20, 760, 1010);
 
-            // Header Banner
             ctx.fillStyle = '#101014';
             ctx.fillRect(40, 40, 720, 110);
             ctx.strokeStyle = '#f59e0b';
@@ -2137,14 +1234,12 @@
 
             ctx.fillStyle = '#a1a1aa';
             ctx.font = '14px monospace';
-            ctx.fillText('PUBLIC AUDIT & TRANSMISSION RECEIPT', 60, 108);
+            ctx.fillText('BROWSERCLUES.LIVE // PUBLIC AUDIT RECEIPT', 60, 108);
 
             ctx.fillStyle = '#ef4444';
             ctx.font = 'bold 12px monospace';
             ctx.fillText('CONFIDENTIAL // CITIZEN FORENSIC COPY', 60, 130);
 
-            // Metadata Grid
-            ctx.fillStyle = '#f4f4f6';
             ctx.font = '15px monospace';
             let y = 190;
 
@@ -2172,16 +1267,15 @@
             };
 
             addRow('TIMESTAMP:', new Date().toISOString());
-            addRow('SCAN HASH:', 'SHA256-ANON-' + Math.floor(Math.random()*8999999+1000000));
+            addRow('SCAN HASH:', 'SHA256-ANON-' + Math.floor(Math.random() * 8999999 + 1000000));
             addRow('SCREEN SPEC:', forensicData.screen);
             addRow('CPU CORES / RAM:', forensicData.cpu);
             addRow('BATTERY STATUS:', forensicData.battery);
             addRow('GPU GRAPHICS:', '[GRAPHICS FINGERPRINT HIDDEN]', true);
             addRow('TIMEZONE / REGION:', '[HOME TIMEZONE HIDDEN]', true);
             addRow('PRIVACY SIGNAL:', forensicData.dnt);
-            addRow('ESTIMATED CPM:', '$' + forensicData.estimatedCpm + ' / CPM ($' + (parseFloat(forensicData.estimatedCpm)/1000).toFixed(4) + '/view)');
+            addRow('ESTIMATED VALUE:', '$' + forensicData.estimatedCpm + ' per 1,000 views');
 
-            // Demands Stamp Section
             y += 15;
             ctx.fillStyle = '#101014';
             ctx.fillRect(40, y, 720, 160);
@@ -2203,7 +1297,6 @@
             ctx.fillText(d2, 60, y + 98);
             ctx.fillText(d3, 60, y + 128);
 
-            // Draw Selected Stamp on Canvas
             ctx.save();
             ctx.translate(560, y + 75);
             ctx.rotate(-0.15);
@@ -2213,11 +1306,10 @@
             ctx.lineWidth = 3;
             ctx.strokeRect(-10, -25, 210, 45);
             ctx.fillStyle = '#ef4444';
-            ctx.font = 'bold 12px monospace';
-            ctx.fillText(currentStamp, 0, 2);
+            ctx.font = 'bold 14px monospace';
+            ctx.fillText(currentStamp, 20, 3);
             ctx.restore();
 
-            // Barcode Simulation
             y += 190;
             ctx.fillStyle = '#ffffff';
             for (let i = 60; i < 740; i += 8) {
@@ -2225,7 +1317,6 @@
                 ctx.fillRect(i, y, w, 45);
             }
 
-            // Footer Provenance
             y += 65;
             ctx.fillStyle = '#a1a1aa';
             ctx.font = '12px monospace';
@@ -2233,56 +1324,54 @@
             ctx.fillText('GENERATED LOCALLY // ZERO SERVER LOG TRANSMISSION', 60, y + 20);
         }
 
-        // Download PNG Receipt
         function downloadReceiptPNG() {
             renderReceiptCanvas();
             const canvas = document.getElementById('receiptCanvas');
-            const dataUrl = canvas.toDataURL('image/png');
             const link = document.createElement('a');
-            link.download = `browser-forensic-receipt-${Date.now()}.png`;
-            link.href = dataUrl;
+            link.download = `browserclues-receipt-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             showToast("Receipt PNG Downloaded!");
         }
 
-        // Clipboard Copy Utility
         function copyText(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => showToast(`Copied: "${text}"`)).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
             const temp = document.createElement('textarea');
             temp.value = text;
             document.body.appendChild(temp);
             temp.select();
-            try {
-                document.execCommand('copy');
-                showToast(`Copied: "${text}"`);
-            } catch (err) {
-                showToast("Failed to copy");
-            }
+            document.execCommand('copy');
             document.body.removeChild(temp);
+            showToast(`Copied: "${text}"`);
         }
 
         function copyOpenRTBJson() {
-            const display = document.getElementById('jsonInspectorDisplay');
-            copyText(display.innerText);
+            copyText(document.getElementById('jsonInspectorDisplay').innerText);
         }
 
         function copyGeneratedLetter() {
-            const textarea = document.getElementById('letterPreviewText');
-            copyText(textarea.value);
+            copyText(document.getElementById('letterPreviewText').value);
         }
 
-        // Toast Message Notification UI
         function showToast(message) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
-            toast.className = 'bg-amberWarning text-black font-mono font-bold text-xs px-4 py-2.5 rounded shadow-2xl flex items-center justify-between border border-amber-400 animate-bounce pointer-events-auto';
-            toast.innerHTML = `<span>${message}</span>`;
+            toast.className = 'bg-amberWarning text-black font-mono font-bold text-xs px-4 py-2 rounded shadow-2xl border border-amber-400 pointer-events-auto';
+            toast.innerText = message;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'transition-opacity', 'duration-300');
                 setTimeout(() => toast.remove(), 300);
-            }, 2500);
+            }, 2200);
         }
     </script>
 </body>
