@@ -86,36 +86,24 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5534997408088306"
      crossorigin="anonymous"></script>
 </head>
-    <section style="max-width:1100px;margin:28px auto;padding:22px;background:#121216;border:1px solid #27272a;border-radius:10px;color:#d4d4d8;line-height:1.7;">
-  <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#f59e0b;margin-bottom:6px;">PLAIN-ENGLISH QUESTIONS &amp; ANSWERS</div>
-  <h2 style="margin:0 0 14px;font-size:1.3rem;color:#ffffff;">How This Free Browser Check Works</h2>
-  <p style="margin:0 0 12px;"><strong>Does BrowserClues.live store or send my device clues anywhere?</strong> No. Every scan runs 100% locally inside your own browser window. We set zero tracking cookies, keep zero server logs, and never collect your personal identity.</p>
-  <p style="margin:0 0 12px;"><strong>Why do websites read my screen size, graphics chip, and time zone?</strong> Browsers share basic hardware and display clues so pages format properly—but automated ad exchanges also use those same clues in split-second auctions to estimate what kind of device you own and how much to bid for your screen.</p>
-  <p style="margin:0;"><strong>Where can I learn how to lock down my browser and remove my name from data brokers?</strong> Read our step-by-step plain-English guides on <a href="how-ad-auctions-work.html" style="color:#2dd4bf;">how ad auctions price your screen</a>, <a href="browser-fingerprinting-explained.html" style="color:#2dd4bf;">why clearing cookies alone is not enough</a>, and <a href="data-broker-opt-out-guide.html" style="color:#2dd4bf;">how to delete your profile from data brokers</a>.</p>
-</section>
-
-<footer style="max-width:1100px;margin:0 auto 36px;padding:16px;border-top:1px solid #27272a;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:0.85rem;color:#a1a1aa;">
-  <span>&copy; 2026 BrowserClues.live &bull; 100% Local Browser Check &bull; Zero Cookies</span>
-  <div style="display:flex;flex-wrap:wrap;gap:14px;">
-    <a href="about.html" style="color:#a1a1aa;text-decoration:none;">About</a>
-    <a href="privacy.html" style="color:#a1a1aa;text-decoration:none;">Privacy Policy</a>
-    <a href="contact.html" style="color:#a1a1aa;text-decoration:none;">Contact</a>
-    <a href="https://research.browserclues.live" style="color:#2dd4bf;text-decoration:none;">Research Library</a>
-  </div>
-</footer>
 <body class="min-h-screen bg-darkBg text-textOffWhite scanlines flex flex-col justify-between selection:bg-amberWarning selection:text-black">
-<nav style="max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #27272a;font-size:0.85rem;">
-  <a href="index.html" style="color:#f4f4f6;font-weight:800;text-decoration:none;">BROWSERCLUES.LIVE</a>
-  <div style="display:flex;flex-wrap:wrap;gap:14px;">
-    <a href="how-ad-auctions-work.html" style="color:#a1a1aa;text-decoration:none;">How Ad Auctions Work</a>
-    <a href="data-broker-opt-out-guide.html" style="color:#a1a1aa;text-decoration:none;">Delete Broker Profiles</a>
-    <a href="browser-fingerprinting-explained.html" style="color:#a1a1aa;text-decoration:none;">Device Clues</a>
-    <a href="https://research.browserclues.live" style="color:#2dd4bf;text-decoration:none;font-weight:600;">Research Library</a>
-    <a href="about.html" style="color:#a1a1aa;text-decoration:none;">About</a>
-    <a href="privacy.html" style="color:#a1a1aa;text-decoration:none;">Privacy</a>
-    <a href="contact.html" style="color:#a1a1aa;text-decoration:none;">Contact</a>
-  </div>
-</nav>
+
+    <!-- PRIMARY SITE NAVIGATION -->
+    <nav class="w-full bg-[#0a0a0c] border-b border-cardBorder px-4 py-2.5 text-xs font-mono">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <a href="index.html" class="text-white font-extrabold tracking-wide hover:text-amberWarning transition-colors">BROWSERCLUES.LIVE</a>
+            <div class="flex flex-wrap items-center gap-4">
+                <a href="how-ad-auctions-work.html" class="text-zinc-400 hover:text-amberWarning transition-colors">How Ad Auctions Work</a>
+                <a href="data-broker-opt-out-guide.html" class="text-zinc-400 hover:text-amberWarning transition-colors">Delete Broker Profiles</a>
+                <a href="browser-fingerprinting-explained.html" class="text-zinc-400 hover:text-amberWarning transition-colors">Device Clues</a>
+                <a href="https://research.browserclues.live" class="text-cyberBlue hover:text-amberWarning font-bold transition-colors">Research Library</a>
+                <a href="about.html" class="text-zinc-400 hover:text-amberWarning transition-colors">About</a>
+                <a href="privacy.html" class="text-zinc-400 hover:text-amberWarning transition-colors">Privacy</a>
+                <a href="contact.html" class="text-zinc-400 hover:text-amberWarning transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
     <!-- TOP NAVIGATION & AUDIT BAR -->
     <header class="sticky top-0 z-50 bg-[#08080a]/95 backdrop-blur-md border-b border-cardBorder">
         <!-- Trust State Banner -->
@@ -769,6 +757,17 @@
             </div>
         </section>
 
+        <!-- PLAIN-ENGLISH FAQ -->
+        <section class="zine-card bg-cardSurface p-5 rounded-lg space-y-3">
+            <span class="text-xs font-mono text-amberWarning font-bold uppercase">[ PLAIN-ENGLISH QUESTIONS &amp; ANSWERS ]</span>
+            <h2 class="text-lg font-bold font-mono text-white">HOW THIS FREE BROWSER CHECK WORKS</h2>
+            <div class="space-y-2.5 text-xs text-zinc-300 font-sans leading-relaxed">
+                <p><strong class="text-white">Does BrowserClues.live store or send my device clues anywhere?</strong> No. Every scan runs 100% locally inside your own browser window. We set zero tracking cookies, keep zero server logs, and never collect your personal identity.</p>
+                <p><strong class="text-white">Why do websites read my screen size, graphics chip, and time zone?</strong> Browsers share basic hardware and display clues so pages format properly—but automated ad exchanges also use those same clues in split-second auctions to estimate what kind of device you own and how much to bid for your screen.</p>
+                <p><strong class="text-white">Where can I learn how to lock down my browser and remove my name from data brokers?</strong> Read our step-by-step plain-English guides on <a href="how-ad-auctions-work.html" class="text-cyberBlue underline">how ad auctions price your screen</a>, <a href="browser-fingerprinting-explained.html" class="text-cyberBlue underline">why clearing cookies alone is not enough</a>, and <a href="data-broker-opt-out-guide.html" class="text-cyberBlue underline">how to delete your profile from data brokers</a>.</p>
+            </div>
+        </section>
+
         <!-- INDEPENDENCE PROMISE -->
         <div class="zine-card bg-cardSurface p-4 rounded-lg border-t-2 border-t-emeraldSuccess flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span class="px-2 py-0.5 bg-emeraldSuccess/20 text-emeraldSuccess border border-emeraldSuccess/40 font-mono text-xs font-bold rounded shrink-0 self-start">
@@ -783,12 +782,15 @@
     <!-- FOOTER -->
     <footer class="border-t border-cardBorder bg-cardSurface py-4 px-4 mt-8 text-center text-xs font-mono text-zinc-500">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-            <span>WHAT YOUR BROWSER SAYS ABOUT YOU // PUBLIC FORENSIC EXHIBIT</span>
+            <span>&copy; 2026 BROWSERCLUES.LIVE // 100% LOCAL BROWSER CHECK &bull; ZERO COOKIES</span>
             <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="https://research.browserclues.live/" class="text-zinc-400 hover:text-amberWarning transition-colors">RESEARCH GUIDES</a>
-                <a href="https://research.browserclues.live/about.html" class="text-zinc-400 hover:text-amberWarning transition-colors">ABOUT</a>
-                <a href="https://research.browserclues.live/privacy.html" class="text-zinc-400 hover:text-amberWarning transition-colors">PRIVACY</a>
-                <a href="https://research.browserclues.live/contact.html" class="text-zinc-400 hover:text-amberWarning transition-colors">CONTACT</a>
+                <a href="how-ad-auctions-work.html" class="text-zinc-400 hover:text-amberWarning transition-colors">AD AUCTIONS</a>
+                <a href="data-broker-opt-out-guide.html" class="text-zinc-400 hover:text-amberWarning transition-colors">OPT-OUT GUIDE</a>
+                <a href="browser-fingerprinting-explained.html" class="text-zinc-400 hover:text-amberWarning transition-colors">DEVICE CLUES</a>
+                <a href="about.html" class="text-zinc-400 hover:text-amberWarning transition-colors">ABOUT</a>
+                <a href="privacy.html" class="text-zinc-400 hover:text-amberWarning transition-colors">PRIVACY</a>
+                <a href="contact.html" class="text-zinc-400 hover:text-amberWarning transition-colors">CONTACT</a>
+                <a href="https://research.browserclues.live/" class="text-cyberBlue hover:text-amberWarning transition-colors">RESEARCH GUIDES</a>
             </div>
         </div>
     </footer>
