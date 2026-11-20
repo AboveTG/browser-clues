@@ -719,6 +719,28 @@
             </div>
         </section>
 
+        <!-- ZERO-COOKIE RESEARCH BRIDGE (MATCHED TO DEVICE SCAN) -->
+        <section id="researchBridgeSection" class="zine-card zine-card-amber bg-cardSurface p-5 rounded-lg space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-2.5">
+                <span class="text-xs font-mono text-amberWarning font-bold uppercase">[ WHAT COMPANIES DO WITH THESE CLUES ]</span>
+                <span class="text-[11px] font-mono text-emeraldSuccess">0 OUTSIDE CONNECTIONS // ZERO-COOKIE # TAG</span>
+            </div>
+            <h2 id="bcBridgeTitle" class="text-base md:text-lg font-bold font-mono text-white">
+                YOUR BROWSER SIGNAL IS OPEN — SEE HOW COMPANIES VALUE &amp; PROTECT EXPOSED DATA
+            </h2>
+            <p id="bcBridgeDesc" class="text-xs text-zinc-300 font-sans leading-relaxed">
+                Ad networks pay fractions of a cent to bid on your screen—yet companies spend thousands protecting against data leaks and privacy exposures. Read the plain-English breakdown matched to your browser check.
+            </p>
+            <div class="flex flex-wrap items-center gap-3 pt-1 font-mono text-xs">
+                <a id="bcBridgeBtn" href="https://research.browserclues.live/posts/commercial-cyber-liability-insurance-quote-checklist.html#clue=open-tracking" class="px-4 py-2.5 bg-amberWarning hover:bg-amber-400 text-black font-extrabold uppercase rounded shadow-lg transition-all">
+                    READ PLAIN-ENGLISH GUIDE MATCHED TO YOUR SCAN &rarr;
+                </a>
+                <a href="https://research.browserclues.live/#from=browserclues" class="px-3.5 py-2.5 bg-darkBg hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-bold uppercase rounded transition-all">
+                    BROWSE ALL GUIDES &rarr;
+                </a>
+            </div>
+        </section>
+
         <!-- INDEPENDENCE PROMISE -->
         <div class="zine-card bg-cardSurface p-4 rounded-lg border-t-2 border-t-emeraldSuccess flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span class="px-2 py-0.5 bg-emeraldSuccess/20 text-emeraldSuccess border border-emeraldSuccess/40 font-mono text-xs font-bold rounded shrink-0 self-start">
@@ -734,7 +756,12 @@
     <footer class="border-t border-cardBorder bg-cardSurface py-4 px-4 mt-8 text-center text-xs font-mono text-zinc-500">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
             <span>WHAT YOUR BROWSER SAYS ABOUT YOU // PUBLIC FORENSIC EXHIBIT</span>
-            <span>100% LOCAL EXECUTION // OPEN SOURCE (MIT)</span>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="https://research.browserclues.live/" class="text-zinc-400 hover:text-amberWarning transition-colors">RESEARCH GUIDES</a>
+                <a href="https://research.browserclues.live/about.html" class="text-zinc-400 hover:text-amberWarning transition-colors">ABOUT</a>
+                <a href="https://research.browserclues.live/privacy.html" class="text-zinc-400 hover:text-amberWarning transition-colors">PRIVACY</a>
+                <a href="https://research.browserclues.live/contact.html" class="text-zinc-400 hover:text-amberWarning transition-colors">CONTACT</a>
+            </div>
         </div>
     </footer>
 
@@ -860,6 +887,29 @@
             }
             document.getElementById('checkDntVal').innerText = forensicData.dnt;
             document.getElementById('decDntVal').innerText = forensicData.dnt;
+
+            updateResearchBridge();
+        }
+
+        function updateResearchBridge() {
+            const titleEl = document.getElementById('bcBridgeTitle');
+            const descEl = document.getElementById('bcBridgeDesc');
+            const btnEl = document.getElementById('bcBridgeBtn');
+            if (!titleEl || !descEl || !btnEl) return;
+
+            if (!forensicData.hasPrivacyProtection) {
+                titleEl.innerText = "YOUR BROWSER SIGNAL IS OPEN — SEE HOW COMPANIES VALUE & PROTECT EXPOSED DATA";
+                descEl.innerText = "Because your browser is not sending a Do-Not-Track or Global Privacy Control signal, ad exchanges can read your device clues freely. See the plain-English checklist organizations use to guard against data leaks.";
+                btnEl.href = "https://research.browserclues.live/posts/commercial-cyber-liability-insurance-quote-checklist.html#clue=open-tracking";
+            } else if (forensicData.coresNum >= 8) {
+                titleEl.innerText = `HIGH-TIER HARDWARE DETECTED (${forensicData.coresNum} CORES) — SEE HOW SYSTEMS ARE TESTED FOR WEAK SPOTS`;
+                descEl.innerText = "Stronger processors and graphics chips attract higher ad-auction bids. Read our plain-English guide on how security teams test systems for hidden vulnerabilities.";
+                btnEl.href = "https://research.browserclues.live/posts/enterprise-penetration-testing-service-pricing-models.html#clue=high-tier-device";
+            } else {
+                titleEl.innerText = "TRACKING SIGNAL IS ON, BUT HARDWARE CLUES REMAIN — SEE HOW ZERO-TRUST SECURITY WORKS";
+                descEl.innerText = "Even when tracking signals are enabled, screen size, time zone, and hardware clues remain visible. Read how modern security verifies devices without relying on cookies.";
+                btnEl.href = "https://research.browserclues.live/posts/zero-trust-cloud-architecture-implementation-guide.html#clue=hardware-footprint";
+            }
         }
 
         function toggleAuctionMode() {
