@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Split-Second Ad Auctions Price Your Screen in 0.2 Seconds — BrowserClues.live</title>
+  <meta name="description" content="A plain-English breakdown of what happens during the 180-millisecond ad auction every time you open a webpage—and why your device clues change the price." />
+  <link rel="canonical" href="https://browserclues.live/how-ad-auctions-work.html" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5534997408088306" crossorigin="anonymous"></script>
+  <style>
+    :root { --bg: #0a0a0c; --card: #121216; --border: #27272a; --text: #f4f4f6; --muted: #a1a1aa; --amber: #f59e0b; --teal: #2dd4bf; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 64px; }
+    nav.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+    nav.top a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+    nav.top a:hover, nav.top a.active { color: var(--amber); }
+    .links { display: flex; flex-wrap: wrap; gap: 16px; }
+    .eyebrow { color: var(--amber); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    h1 { font-size: 2.05rem; line-height: 1.25; margin: 8px 0 14px; }
+    h2 { font-size: 1.35rem; color: #ffffff; margin: 32px 0 10px; }
+    p, li { color: #d4d4d8; font-size: 1.02rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; margin: 24px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+    th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border); }
+    th { color: var(--amber); background: #16161b; }
+    .btn { display: inline-block; margin-top: 10px; padding: 11px 18px; background: var(--amber); color: #0a0a0c; font-weight: 700; text-decoration: none; border-radius: 6px; }
+    footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.88rem; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; margin-right: 14px; }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top">
+      <a href="index.html" style="color:#f4f4f6;font-weight:800;">BROWSERCLUES.LIVE</a>
+      <div class="links">
+        <a href="index.html">Live Check</a>
+        <a href="how-ad-auctions-work.html" class="active">How Ad Auctions Work</a>
+        <a href="data-broker-opt-out-guide.html">Delete Broker Profiles</a>
+        <a href="browser-fingerprinting-explained.html">Device Clues</a>
+        <a href="about.html">About</a>
+      </div>
+    </nav>
+
+    <span class="eyebrow">Plain-English Guide &bull; 5 Min Read</span>
+    <h1>How Split-Second Ad Auctions Price Your Screen in 0.2 Seconds</h1>
+    <p>Before the text on an everyday news article or weather page even finishes appearing on your phone, an automated auction has already taken place behind the scenes. Dozens of advertising companies look at a tiny packet of clues from your browser, decide how much your attention is worth, and place competing bids—all in less time than it takes to blink.</p>
+
+    <h2>1. What Happens During Those 180 Milliseconds</h2>
+    <p>When a webpage loads an ad slot, it sends out an automated bid request to multiple ad exchanges at the exact same moment. Each exchange has roughly 150 to 200 milliseconds to reply with a price before the auction closes and the highest bidder's ad appears on screen.</p>
+    <p>Unlike traditional billboard or magazine ads, where every reader sees the exact same advertisement, split-second online auctions price <strong>each individual visit</strong> separately. Two people opening the exact same webpage at the exact same second can generate wildly different winning bids depending on the clues their browsers share.</p>
+
+    <h2>2. The Five Clues That Raise or Lower Your Price Tag</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Browser Clue</th>
+          <th>What It Reveals</th>
+          <th>How It Affects Ad Bids</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Time Zone &amp; Region</strong></td>
+          <td>Your general metropolitan area and local time of day without needing GPS.</td>
+          <td>Advertisers pay substantially more to reach shoppers in high-spending regions during peak daytime hours.</td>
+        </tr>
+        <tr>
+          <td><strong>Graphics Chip &amp; Speed</strong></td>
+          <td>Whether you are browsing on a budget phone, an older laptop, or a flagship device.</td>
+          <td>Newer, faster hardware signals higher household purchasing power, pushing ad bids higher.</td>
+        </tr>
+        <tr>
+          <td><strong>Screen Size &amp; Sharpness</strong></td>
+          <td>Exact pixel dimensions and Retina/high-density screen scaling.</td>
+          <td>Helps buyers match video or interactive ad formats and confirms device tier.</td>
+        </tr>
+        <tr>
+          <td><strong>Tracking Signal (GPC / DNT)</strong></td>
+          <td>Whether your browser asks ad networks not to profile or track you across sites.</td>
+          <td>Open browsers attract higher bids because ad networks can match the visit to past shopping behavior.</td>
+        </tr>
+        <tr>
+          <td><strong>Page Topic</strong></td>
+          <td>What you are reading right now (for example, weather vs. business insurance).</td>
+          <td>High-value topics like finance, software, and insurance command the highest auction prices.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Why One View Costs Pennies—While Profiles Sell for Dollars</h2>
+    <p>A single banner ad view typically clears for around <strong>$2.00 to $5.00 per 1,000 views</strong>—which works out to roughly <strong>0.2 to 0.5 cents</strong> for one visit. On the surface, a fraction of a cent sounds harmless.</p>
+    <p>The catch is what happens to the bid stream itself. As documented in Federal Trade Commission enforcement orders against brokers like Mobilewalla, certain companies listened in on real-time ad auction feeds not to show ads, but to harvest and store the device identifiers and location coordinates broadcast during those auctions—building long-term movement profiles sold to third parties without user consent.</p>
+
+    <h2>4. How to Lower Your Trackable Footprint Today</h2>
+    <ul>
+      <li><strong>Turn on Global Privacy Control (GPC):</strong> Browsers like Brave and Firefox—or free extensions like Privacy Badger—automatically send a legal signal telling websites not to sell or share your browsing data.</li>
+      <li><strong>Use Built-In Tracker Blocking:</strong> Switching Safari's privacy settings or Firefox's Enhanced Tracking Protection to Strict prevents third-party ad scripts from linking your visits across different websites.</li>
+      <li><strong>Test It Yourself:</strong> Run our <a href="index.html" style="color:#2dd4bf;">0.2-second browser check</a> and flip the <em>Test Privacy Mode</em> switch to see how hiding open clues changes your simulated auction receipt.</li>
+    </ul>
+
+    <div class="card">
+      <strong style="color:#f59e0b;display:block;margin-bottom:6px;">See Your Own Live Auction Estimate</strong>
+      <p style="margin:0 0 10px;">Want to inspect the exact clues your current browser exposes right now? Run our 100% local check—zero cookies, zero server logs.</p>
+      <a class="btn" href="index.html">Open the 0.2-Second Browser Check &rarr;</a>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 BrowserClues.live &bull; Free Public Privacy Education</span>
+      <div>
+        <a href="index.html">Scanner</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://research.browserclues.live">Research Guides</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
